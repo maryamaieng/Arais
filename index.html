@@ -13,46 +13,66 @@
         }
         
         body {
-            background: #f5f5f5;
+            background: #f0f2f5;
             padding: 20px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 100%;
             margin: 0 auto;
             background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
-        h1 {
+        .header {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 25px;
             text-align: center;
-            color: #8B4513;
-            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
         }
 
         .tabs {
             display: flex;
-            margin-bottom: 20px;
             background: #f8f9fa;
-            border-radius: 10px;
-            padding: 5px;
+            padding: 10px;
+            border-bottom: 2px solid #e9ecef;
         }
 
         .tab {
             flex: 1;
-            padding: 10px;
-            text-align: center;
+            padding: 12px;
             border: none;
             background: none;
             cursor: pointer;
+            font-weight: bold;
             border-radius: 8px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
         }
 
         .tab.active {
-            background: #8B4513;
+            background: #28a745;
             color: white;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+        }
+
+        .tab.active:hover {
+            background: #218838;
+        }
+
+        .content {
+            padding: 20px;
+            min-height: 400px;
         }
 
         .page {
@@ -65,27 +85,35 @@
 
         .hall-card {
             background: white;
-            border: 2px solid #ddd;
+            border: 2px solid #e9ecef;
             border-radius: 10px;
             padding: 15px;
             margin: 10px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .hall-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .hall-card.available {
-            border-color: #28a745;
+            border-left: 4px solid #28a745;
         }
 
         .hall-card.booked {
-            border-color: #dc3545;
+            border-left: 4px solid #dc3545;
         }
 
         .status {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 15px;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 4px 8px;
+            border-radius: 12px;
             font-size: 12px;
             font-weight: bold;
-            margin-bottom: 10px;
         }
 
         .status.available {
@@ -99,73 +127,130 @@
         }
 
         button {
-            background: #8B4513;
+            background: #28a745;
             color: white;
             border: none;
             padding: 10px 15px;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            margin: 5px;
+            margin: 5px 0;
+            width: 100%;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #218838;
+            transform: translateY(-1px);
         }
 
         button:disabled {
             background: #6c757d;
             cursor: not-allowed;
+            transform: none;
         }
 
         .notification {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            padding: 10px;
-            border-radius: 5px;
+            background: #e8f5e8;
+            border: 1px solid #28a745;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+            transition: all 0.3s ease;
+        }
+
+        .notification:hover {
+            background: #d4edda;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .action-buttons button {
+            flex: 1;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+
+        h2 {
+            color: #28a745;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        p {
+            color: #495057;
             margin: 5px 0;
         }
 
-        .form-group {
-            margin: 10px 0;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin: 5px 0;
+        strong {
+            color: #28a745;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎊 عرايس - نظام إدارة القاعات</h1>
-        
+        <div class="header">
+            <h1>🎊 عرايس - نظام إدارة القاعات</h1>
+            <p>ربط مباشر بين العملاء وأصحاب القاعات</p>
+        </div>
+
         <div class="tabs">
-            <button class="tab active" onclick="showTab('client')">العملاء</button>
-            <button class="tab" onclick="showTab('owner')">أصحاب القاعات</button>
-            <button class="tab" onclick="showTab('notifications')">الإشعارات</button>
+            <button class="tab active" onclick="showPage('client')">👥 العملاء</button>
+            <button class="tab" onclick="showPage('owner')">🏢 أصحاب القاعات</button>
+            <button class="tab" onclick="showPage('notifications')">📱 الإشعارات</button>
         </div>
 
-        <!-- صفحة العملاء -->
-        <div id="client" class="page active">
-            <h2>القاعات المتاحة</h2>
-            <div id="client-halls">
-                <!-- القاعات تظهر هنا -->
+        <div class="content">
+            <!-- صفحة العملاء -->
+            <div id="client" class="page active">
+                <h2>🔍 ابحث عن قاعة لحفلتك</h2>
+                <div id="client-halls">
+                    <!-- القاعات تظهر هنا -->
+                </div>
             </div>
-        </div>
 
-        <!-- صفحة أصحاب القاعات -->
-        <div id="owner" class="page">
-            <h2>إدارة قاعاتك</h2>
-            <button onclick="showAddHallForm()">➕ إضافة قاعة</button>
-            <div id="owner-halls">
-                <!-- قاعات المالك تظهر هنا -->
+            <!-- صفحة أصحاب القاعات -->
+            <div id="owner" class="page">
+                <h2>🏢 إدارة قاعاتك</h2>
+                <button onclick="addNewHall()" style="background: #20c997; margin-bottom: 15px;">➕ إضافة قاعة جديدة</button>
+                <div id="owner-halls">
+                    <!-- قاعات المالك تظهر هنا -->
+                </div>
             </div>
-        </div>
 
-        <!-- صفحة الإشعارات -->
-        <div id="notifications" class="page">
-            <h2>الإشعارات والحجوزات</h2>
-            <div id="notifications-list">
-                <!-- الإشعارات تظهر هنا -->
+            <!-- صفحة الإشعارات -->
+            <div id="notifications" class="page">
+                <h2>📱 الإشعارات والحجوزات</h2>
+                <div id="notifications-list">
+                    <!-- الإشعارات تظهر هنا -->
+                </div>
             </div>
         </div>
     </div>
@@ -187,11 +272,11 @@
             {
                 id: 2, 
                 name: "قاعة بابل",
-                area: "الجادرية",
+                area: "الجادرية", 
                 capacity: 500,
                 price: 3500000,
-                status: "available", 
-                owner: "محمد الكاظمي",
+                status: "available",
+                owner: "محمد الكاظمي", 
                 ownerPhone: "07807654321",
                 bookings: []
             }
@@ -212,12 +297,12 @@
                     <div class="hall-card ${statusClass}">
                         <span class="status ${statusClass}">${statusText}</span>
                         <h3>${hall.name}</h3>
-                        <p><strong>المنطقة:</strong> ${hall.area}</p>
-                        <p><strong>السعة:</strong> ${hall.capacity} شخص</p>
-                        <p><strong>السعر:</strong> ${hall.price.toLocaleString()} دينار</p>
-                        <p><strong>صاحب القاعة:</strong> ${hall.owner} - ${hall.ownerPhone}</p>
+                        <p><strong>📍 المنطقة:</strong> ${hall.area}</p>
+                        <p><strong>👥 السعة:</strong> ${hall.capacity} شخص</p>
+                        <p><strong>💰 السعر:</strong> ${hall.price.toLocaleString()} دينار</p>
+                        <p><strong>📞 صاحب القاعة:</strong> ${hall.owner} - ${hall.ownerPhone}</p>
                         <button onclick="bookHall(${hall.id})" ${hall.status !== 'available' ? 'disabled' : ''}>
-                            ${hall.status === 'available' ? 'احجز الآن' : 'محجوزة'}
+                            ${hall.status === 'available' ? '🎉 احجز الآن' : '❌ محجوزة'}
                         </button>
                     </div>
                 `;
@@ -231,13 +316,16 @@
             container.innerHTML = '';
 
             halls.forEach(hall => {
+                const bookingsCount = hall.bookings.length;
                 const hallCard = `
                     <div class="hall-card">
                         <h3>${hall.name}</h3>
-                        <p>الحالة: <span class="status ${hall.status}">${hall.status === 'available' ? 'متاحة' : 'محجوزة'}</span></p>
-                        <p>عدد الحجوزات: ${hall.bookings.length}</p>
-                        <button onclick="viewBookings(${hall.id})">عرض الحجوزات</button>
-                        <button onclick="changeStatus(${hall.id})">تغيير الحالة</button>
+                        <p><strong>الحالة:</strong> <span class="status ${hall.status}">${hall.status === 'available' ? 'متاحة' : 'محجوزة'}</span></p>
+                        <p><strong>عدد الحجوزات:</strong> ${bookingsCount}</p>
+                        <div class="action-buttons">
+                            <button class="btn-warning" onclick="viewBookings(${hall.id})">📅 الحجوزات</button>
+                            <button class="btn-success" onclick="changeHallStatus(${hall.id})">🔄 تغيير الحالة</button>
+                        </div>
                     </div>
                 `;
                 container.innerHTML += hallCard;
@@ -250,7 +338,7 @@
             container.innerHTML = '';
 
             if (notifications.length === 0) {
-                container.innerHTML = '<p>لا توجد إشعارات</p>';
+                container.innerHTML = '<div class="notification"><p>لا توجد إشعارات حالياً</p></div>';
                 return;
             }
 
@@ -259,11 +347,11 @@
                     <div class="notification">
                         <strong>${notif.title}</strong>
                         <p>${notif.message}</p>
-                        <small>${notif.time}</small>
+                        <small>⏰ ${notif.time}</small>
                         ${notif.bookingId ? `
-                            <div>
-                                <button onclick="confirmBooking(${notif.bookingId})">قبول الحجز</button>
-                                <button onclick="rejectBooking(${notif.bookingId})">رفض الحجز</button>
+                            <div class="action-buttons">
+                                <button class="btn-success" onclick="confirmBooking(${notif.bookingId})">✅ قبول الحجز</button>
+                                <button class="btn-danger" onclick="rejectBooking(${notif.bookingId})">❌ رفض الحجز</button>
                             </div>
                         ` : ''}
                     </div>
@@ -276,13 +364,13 @@
         function bookHall(hallId) {
             const hall = halls.find(h => h.id === hallId);
             
-            const name = prompt("أدخل اسمك:");
+            const name = prompt("👤 أدخل اسمك:");
             if (!name) return;
 
-            const phone = prompt("أدخل رقم هاتفك:");
+            const phone = prompt("📞 أدخل رقم هاتفك:");
             if (!phone) return;
 
-            const date = prompt("أدخل تاريخ الحجز (مثال: 2024-12-25):");
+            const date = prompt("📅 أدخل تاريخ الحجز (مثال: 2024-12-25):");
             if (!date) return;
 
             // إنشاء حجز جديد
@@ -306,7 +394,7 @@
                 bookingId: booking.id
             });
 
-            alert('تم إرسال طلب الحجز! سيتم التواصل معك للتأكيد.');
+            alert('🎉 تم إرسال طلب الحجز! سيتم التواصل معك للتأكيد.');
             
             // تحديث العرض
             displayClientHalls();
@@ -316,12 +404,14 @@
 
         // تأكيد الحجز
         function confirmBooking(bookingId) {
-            // البحث عن الحجز في كل القاعات
+            let found = false;
+            
             for (let hall of halls) {
                 const booking = hall.bookings.find(b => b.id === bookingId);
                 if (booking) {
                     booking.status = 'confirmed';
                     hall.status = 'booked';
+                    found = true;
                     
                     notifications.push({
                         id: Date.now(),
@@ -330,90 +420,101 @@
                         time: new Date().toLocaleString('ar-IQ')
                     });
                     
-                    alert('تم تأكيد الحجز!');
+                    alert('✅ تم تأكيد الحجز!');
                     break;
                 }
             }
             
-            displayClientHalls();
-            displayOwnerHalls();
-            displayNotifications();
+            if (found) {
+                displayClientHalls();
+                displayOwnerHalls();
+                displayNotifications();
+            }
         }
 
         // رفض الحجز
         function rejectBooking(bookingId) {
-            // البحث عن الحجز في كل القاعات
+            let found = false;
+            
             for (let hall of halls) {
-                const booking = hall.bookings.find(b => b.id === bookingId);
-                if (booking) {
+                const bookingIndex = hall.bookings.findIndex(b => b.id === bookingId);
+                if (bookingIndex !== -1) {
+                    const booking = hall.bookings[bookingIndex];
+                    
                     // إزالة الحجز
-                    hall.bookings = hall.bookings.filter(b => b.id !== bookingId);
+                    hall.bookings.splice(bookingIndex, 1);
                     hall.status = 'available';
+                    found = true;
                     
                     notifications.push({
                         id: Date.now(),
-                        title: 'تم رفض الحجار ❌',
+                        title: 'تم رفض الحجز ❌',
                         message: تم رفض حجز ${hall.name} للعميل ${booking.customerName},
                         time: new Date().toLocaleString('ar-IQ')
                     });
                     
-                    alert('تم رفض الحجز!');
+                    alert('❌ تم رفض الحجز!');
                     break;
                 }
             }
             
-            displayClientHalls();
-            displayOwnerHalls();
-            displayNotifications();
+            if (found) {
+                displayClientHalls();
+                displayOwnerHalls();
+                displayNotifications();
+            }
         }
 
         // عرض حجوزات قاعة
         function viewBookings(hallId) {
             const hall = halls.find(h => h.id === hallId);
-            if (hall.bookings.length === 0) {
-                alert('لا توجد حجوزات لهذه القاعة');
+            if (!hall.bookings || hall.bookings.length === 0) {
+                alert('📭 لا توجد حجوزات لهذه القاعة');
                 return;
             }
 
             let message = حجوزات ${hall.name}:\n\n;
             hall.bookings.forEach(booking => {
-                message += العميل: ${booking.customerName}\n;
-                message += الهاتف: ${booking.customerPhone}\n;
-                message += التاريخ: ${booking.date}\n;
-                message += الحالة: ${booking.status}\n\n;
+                message += 👤 العميل: ${booking.customerName}\n;
+                message += 📞 الهاتف: ${booking.customerPhone}\n;
+                message += 📅 التاريخ: ${booking.date}\n;
+                message += ✅ الحالة: ${booking.status}\n;
+                message += '────────────────────\n';
             });
             alert(message);
         }
 
         // تغيير حالة القاعة
-        function changeStatus(hallId) {
+        function changeHallStatus(hallId) {
             const hall = halls.find(h => h.id === hallId);
             const newStatus = hall.status === 'available' ? 'booked' : 'available';
             hall.status = newStatus;
             
-            alert(تم تغيير حالة ${hall.name} إلى ${newStatus === 'available' ? 'متاحة' : 'محجوزة'});
+            const statusText = newStatus === 'available' ? 'متاحة' : 'محجوزة';
+            alert(🔄 تم تغيير حالة ${hall.name} إلى ${statusText});
+            
             displayClientHalls();
             displayOwnerHalls();
         }
 
         // إضافة قاعة جديدة
-        function showAddHallForm() {
-            const name = prompt("اسم القاعة:");
+        function addNewHall() {
+            const name = prompt("🏢 اسم القاعة:");
             if (!name) return;
 
-            const area = prompt("المنطقة:");
+            const area = prompt("📍 المنطقة:");
             if (!area) return;
 
-            const capacity = prompt("السعة (عدد الأشخاص):");
+            const capacity = prompt("👥 السعة (عدد الأشخاص):");
             if (!capacity) return;
 
-            const price = prompt("السعر (دينار):");
+            const price = prompt("💰 السعر (دينار):");
             if (!price) return;
 
-            const owner = prompt("اسم صاحب القاعة:");
+            const owner = prompt("👤 اسم صاحب القاعة:");
             if (!owner) return;
 
-            const ownerPhone = prompt("هاتف صاحب القاعة:");
+            const ownerPhone = prompt("📞 هاتف صاحب القاعة:");
             if (!ownerPhone) return;
 
             const newHall = {
@@ -429,20 +530,30 @@
             };
 
             halls.push(newHall);
-            alert('تم إضافة القاعة بنجاح!');
+            
+            notifications.push({
+                id: Date.now(),
+                title: 'قاعة جديدة 🎊',
+                message: تم إضافة قاعة ${name} في ${area},
+                time: new Date().toLocaleString('ar-IQ')
+            });
+            
+            alert('✅ تم إضافة القاعة بنجاح!');
+            
             displayClientHalls();
             displayOwnerHalls();
+            displayNotifications();
         }
 
-        // تبديل التبويبات
-        function showTab(tabName) {
+        // تبديل الصفحات
+        function showPage(pageId) {
             // إخفاء كل الصفحات
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
             
             // إظهار الصفحة المطلوبة
-            document.getElementById(tabName).classList.add('active');
+            document.getElementById(pageId).classList.add('active');
             
             // تحديث الأزرار
             document.querySelectorAll('.tab').forEach(tab => {
@@ -451,17 +562,17 @@
             event.target.classList.add('active');
 
             // تحديث البيانات
-            if (tabName === 'client') displayClientHalls();
-            if (tabName === 'owner') displayOwnerHalls();
-            if (tabName === 'notifications') displayNotifications();
+            if (pageId === 'client') displayClientHalls();
+            if (pageId === 'owner') displayOwnerHalls();
+            if (pageId === 'notifications') displayNotifications();
         }
 
-        // التهيئة الأولى
-        document.addEventListener('DOMContentLoaded', function() {
+        // التهيئة الأولى عند تحميل الصفحة
+        window.onload = function() {
             displayClientHalls();
             displayOwnerHalls();
             displayNotifications();
-        });
+        };
     </script>
 </body>
 </html>
