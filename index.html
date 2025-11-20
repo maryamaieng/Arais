@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرايس - منصة حجز قاعات الأفراح</title>
+    <title>عرايس - تطبيق حجز قاعات الأفراح</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6A0DAD 0%, #8A2BE2 100%);
             min-height: 100vh;
             padding: 0;
         }
@@ -26,47 +26,71 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
-        /* الهيدر */
+        /* الهيدر الملكي */
         .app-header {
-            background: linear-gradient(135deg, #8B4513, #A0522D);
+            background: linear-gradient(135deg, #6A0DAD, #8A2BE2);
             color: white;
-            padding: 20px;
+            padding: 25px 20px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 20px rgba(106, 13, 173, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FFD700, #FFF8DC, #FFD700);
         }
 
         .app-header h1 {
-            font-size: 1.5em;
-            margin-bottom: 5px;
+            font-size: 1.6em;
+            margin-bottom: 8px;
+            font-weight: bold;
         }
 
         .app-header p {
             opacity: 0.9;
-            font-size: 0.9em;
+            font-size: 0.95em;
         }
 
         /* المحتوى */
         .app-content {
             padding: 20px;
+            background: #f8f9fa;
+            min-height: calc(100vh - 140px);
         }
 
         /* البحث */
         .search-section {
             background: white;
-            padding: 15px;
+            padding: 20px;
             margin-bottom: 20px;
-            border-radius: 15px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(106, 13, 173, 0.1);
+            border: 2px solid #f0f0f0;
         }
 
         .search-box {
             width: 100%;
-            padding: 12px 15px;
+            padding: 15px 20px;
             border: 2px solid #e0e0e0;
             border-radius: 25px;
             font-size: 16px;
             margin-bottom: 15px;
             text-align: center;
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: #6A0DAD;
+            background: white;
+            box-shadow: 0 0 10px rgba(106, 13, 173, 0.2);
         }
 
         .filter-tabs {
@@ -77,20 +101,22 @@
         }
 
         .filter-tab {
-            padding: 8px 16px;
-            border: 2px solid #8B4513;
+            padding: 10px 18px;
+            border: 2px solid #6A0DAD;
             background: white;
-            color: #8B4513;
-            border-radius: 20px;
+            color: #6A0DAD;
+            border-radius: 25px;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 600;
             white-space: nowrap;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .filter-tab.active {
-            background: #8B4513;
+            background: linear-gradient(135deg, #6A0DAD, #8A2BE2);
             color: white;
+            transform: scale(1.05);
         }
 
         /* كروت القاعات */
@@ -98,20 +124,21 @@
             background: white;
             border-radius: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 20px rgba(106, 13, 173, 0.15);
             overflow: hidden;
             transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
         }
 
         .hall-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 12px 30px rgba(106, 13, 173, 0.2);
         }
 
         .hall-image {
             width: 100%;
             height: 180px;
-            background: linear-gradient(45deg, #8B4513, #A0522D);
+            background: linear-gradient(135deg, #6A0DAD, #8A2BE2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -123,14 +150,15 @@
 
         .hall-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background: #ff6b6b;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #6A0DAD;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.75em;
             font-weight: bold;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
         }
 
         .hall-info {
@@ -140,7 +168,7 @@
         .hall-name {
             color: #2d3748;
             font-size: 1.3em;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-weight: bold;
         }
 
@@ -155,71 +183,97 @@
         .meta-item {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             color: #666;
             font-size: 0.9em;
+            background: #f8f9fa;
+            padding: 6px 12px;
+            border-radius: 15px;
         }
 
         .hall-price {
-            color: #8B4513;
-            font-size: 1.4em;
+            color: #6A0DAD;
+            font-size: 1.5em;
             font-weight: bold;
-            margin: 15px 0;
+            margin: 20px 0;
             text-align: center;
+            background: linear-gradient(135deg, #6A0DAD, #8A2BE2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .book-btn {
             width: 100%;
-            background: linear-gradient(135deg, #8B4513, #A0522D);
+            background: linear-gradient(135deg, #6A0DAD, #8A2BE2);
             color: white;
             border: none;
-            padding: 15px;
-            border-radius: 12px;
+            padding: 16px;
+            border-radius: 15px;
             font-size: 1.1em;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+            box-shadow: 0 4px 15px rgba(106, 13, 173, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .book-btn:hover::before {
+            left: 100%;
         }
 
         .book-btn:hover {
-            background: linear-gradient(135deg, #654321, #8B4513);
+            background: linear-gradient(135deg, #5A0C9A, #7A25D2);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+            box-shadow: 0 6px 20px rgba(106, 13, 173, 0.4);
         }
 
         /* القائمة السفلية */
         .app-footer {
             background: white;
-            border-top: 1px solid #e0e0e0;
+            border-top: 2px solid #f0f0f0;
             display: flex;
             justify-content: space-around;
             padding: 15px 0;
             position: sticky;
             bottom: 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
         }
 
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 5px 10px;
+            padding: 8px 12px;
             color: #666;
             text-decoration: none;
             font-size: 0.8em;
-            border-radius: 10px;
+            border-radius: 15px;
             transition: all 0.3s ease;
+            min-width: 60px;
         }
 
         .nav-item.active {
-            color: #8B4513;
-            background: rgba(139, 69, 19, 0.1);
+            color: #6A0DAD;
+            background: rgba(106, 13, 173, 0.1);
+            transform: translateY(-5px);
         }
 
         .nav-icon {
-            font-size: 1.5em;
-            margin-bottom: 3px;
+            font-size: 1.6em;
+            margin-bottom: 4px;
         }
 
         /* الأحصائيات */
@@ -235,13 +289,17 @@
             padding: 20px;
             border-radius: 15px;
             text-align: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(106, 13, 173, 0.1);
+            border: 2px solid #f0f0f0;
         }
 
         .stat-number {
             font-size: 1.8em;
             font-weight: bold;
-            color: #8B4513;
+            background: linear-gradient(135deg, #6A0DAD, #8A2BE2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             display: block;
         }
 
@@ -250,14 +308,44 @@
             font-size: 0.9em;
             margin-top: 5px;
         }
+
+        /* قسم أصحاب القاعات */
+        .owner-section {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(106, 13, 173, 0.1);
+            text-align: center;
+            border: 2px solid #f0f0f0;
+        }
+
+        .owner-btn {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #6A0DAD;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .owner-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
     </style>
 </head>
 <body>
     <div class="app-container">
         <!-- الهيدر -->
         <div class="app-header">
-            <h1>🎊 عرايس</h1>
-            <p>منصة حجز قاعات الأفراح في العراق</p>
+            <h1>👑 عرايس</h1>
+            <p>تطبيق حجز قاعات الأفراح الراقي</p>
         </div>
 
         <!-- المحتوى -->
@@ -278,7 +366,7 @@
             <div class="stats-section">
                 <div class="stat-card">
                     <span class="stat-number">25+</span>
-                    <span class="stat-label">قاعة</span>
+                    <span class="stat-label">قاعة فاخرة</span>
                 </div>
                 <div class="stat-card">
                     <span class="stat-number">500+</span>
@@ -290,7 +378,7 @@
             <div class="hall-card">
                 <div class="hall-image">
                     قاعة الرشيد
-                    <div class="hall-badge">🔥 الأكثر طلباً</div>
+                    <div class="hall-badge">👑 متميز</div>
                 </div>
                 <div class="hall-info">
                     <h3 class="hall-name">قاعة الرشيد للمناسبات</h3>
@@ -318,18 +406,11 @@
                 </div>
             </div>
 
-            <div class="hall-card">
-                <div class="hall-image">قاعة كربلاء</div>
-                <div class="hall-info">
-                    <h3 class="hall-name">قاعة كربلاء الكبرى</h3>
-                    <div class="hall-meta">
-                        <span class="meta-item">📍 قرب الحرم</span>
-                        <span class="meta-item">👥 550 شخص</span>
-                        <span class="meta-item">⭐ 4.7/5</span>
-                    </div>
-                    <div class="hall-price">3,200,000 دينار</div>
-                    <button class="book-btn">احجز الآن</button>
-                </div>
+            <!-- قسم أصحاب القاعات -->
+            <div class="owner-section">
+                <h3 style="color: #6A0DAD; margin-bottom: 15px;">هل أنت صاحب قاعة؟</h3>
+                <p style="color: #666; margin-bottom: 20px;">انضم إلى منصتنا وعرض قاعتك على آلاف العملاء</p>
+                <button class="owner-btn">🏢 تسجيل قاعة جديدة</button>
             </div>
         </div>
 
@@ -369,7 +450,7 @@
                 const hallName = this.closest('.hall-card').querySelector('.hall-name').textContent;
                 const hallPrice = this.closest('.hall-card').querySelector('.hall-price').textContent;
                 
-                alert(🎉 تم بدء حجز القاعة!\n\n🏢 ${hallName}\n💰 ${hallPrice}\n\nسيتم التواصل معك خلال 24 ساعة للتأكيد.);
+                alert(👑 تم بدء حجز القاعة!\n\n🏢 ${hallName}\n💰 ${hallPrice}\n\nسيتم التواصل معك خلال 24 ساعة للتأكيد.);
             });
         });
 
@@ -380,6 +461,11 @@
                 document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
             });
+        });
+
+        // زر أصحاب القاعات
+        document.querySelector('.owner-btn').addEventListener('click', function() {
+            alert('🚀 سيتم توجيهك لتطبيق إدارة القاعات الخاص بأصحاب القاعات');
         });
     </script>
 </body>
