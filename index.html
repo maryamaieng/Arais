@@ -3,111 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرايس - حجز قاعات أفراح</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        
-        body {
-            background: #f5f5f5;
-            padding: 20px;
-        }
-
-        .header {
-            background: white;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 20px;
-            border-radius: 10px;
-        }
-
-        .header h1 {
-            color: #8B4513;
-            margin-bottom: 10px;
-        }
-
-        .hall-card {
-            background: white;
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 10px;
-            border-right: 5px solid #8B4513;
-        }
-
-        .hall-name {
-            color: #333;
-            font-size: 1.3em;
-            margin-bottom: 10px;
-        }
-
-        .hall-details {
-            color: #666;
-            margin: 5px 0;
-        }
-
-        .hall-price {
-            color: #8B4513;
-            font-weight: bold;
-            font-size: 1.2em;
-            margin: 10px 0;
-        }
-
-        .book-btn {
-            background: #8B4513;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1.1em;
-        }
-    </style>
+    <title>عرايس - حجز قاعات الأفراح</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">
-        <h1>عرايس - حجز قاعات الأفراح</h1>
-        <p>اختار القاعة اللي تعجبك واحجزها</p>
+    <div class="app-container">
+        <div class="app-header">
+            <h1>🎊 عرايس</h1>
+        </div>
+
+        <div class="app-content">
+            <div class="search-section">
+                <input type="text" class="search-box" placeholder="🔍 ابحث عن قاعة...">
+            </div>
+
+            <div id="halls-list">
+                <!-- القاعات تظهر هنا -->
+            </div>
+        </div>
+
+        <div class="app-footer">
+            <button class="nav-btn" onclick="showHalls()">🏠 الرئيسية</button>
+            <button class="nav-btn" onclick="showOwner()">🏢 قاعاتي</button>
+        </div>
     </div>
 
-    <div class="hall-card">
-        <h3 class="hall-name">قاعة الرشيد</h3>
-        <p class="hall-details">📍 بغداد - المنصور</p>
-        <p class="hall-details">👥 600 شخص</p>
-        <p class="hall-details">⭐ 4.8/5</p>
-        <p class="hall-price">4,000,000 دينار</p>
-        <button class="book-btn">احجز الآن</button>
-    </div>
-
-    <div class="hall-card">
-        <h3 class="hall-name">قاعة بابل</h3>
-        <p class="hall-details">📍 بغداد - الجادرية</p>
-        <p class="hall-details">👥 500 شخص</p>
-        <p class="hall-details">⭐ 4.9/5</p>
-        <p class="hall-price">3,500,000 دينار</p>
-        <button class="book-btn">احجز الآن</button>
-    </div>
-
-    <div class="hall-card">
-        <h3 class="hall-name">قاعة كربلاء</h3>
-        <p class="hall-details">📍 كربلاء - قرب الحرم</p>
-        <p class="hall-details">👥 550 شخص</p>
-        <p class="hall-details">⭐ 4.7/5</p>
-        <p class="hall-price">3,200,000 دينار</p>
-        <button class="book-btn">احجز الآن</button>
-    </div>
-
-    <script>
-        document.querySelectorAll('.book-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const hallName = this.parentElement.querySelector('.hall-name').textContent;
-                alert(`جاري حجز: ${hallName}\nراح نتواصل معك خلال 24 ساعة!`);
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
