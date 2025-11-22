@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام إدارة قاعات الأفراح</title>
+    <title>عراق الأفراح - النظام المتكامل</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -33,7 +33,124 @@
             background-color: #f5f5f5;
             color: var(--dark);
             line-height: 1.6;
+        }
+        
+        .login-container {
             display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+        }
+        
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .login-title {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .login-subtitle {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        
+        .user-type-selector {
+            display: flex;
+            margin-bottom: 20px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 2px solid var(--primary);
+        }
+        
+        .user-type {
+            flex: 1;
+            padding: 12px;
+            background: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .user-type.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.2);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn i {
+            margin-left: 8px;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--secondary-light);
+        }
+        
+        .dashboard {
+            display: none;
             min-height: 100vh;
         }
         
@@ -44,7 +161,9 @@
             padding: 20px 0;
             transition: all 0.3s ease;
             box-shadow: var(--shadow);
-            z-index: 100;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
         }
         
         .logo {
@@ -95,10 +214,10 @@
         }
         
         .main-content {
+            margin-right: 260px;
             flex: 1;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
         }
         
         .top-bar {
@@ -108,24 +227,6 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: var(--shadow);
-            z-index: 99;
-        }
-        
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background: var(--light);
-            border-radius: 30px;
-            padding: 8px 15px;
-            width: 300px;
-        }
-        
-        .search-bar input {
-            background: transparent;
-            border: none;
-            outline: none;
-            width: 100%;
-            margin-right: 10px;
         }
         
         .user-info {
@@ -144,7 +245,6 @@
         
         .content {
             padding: 25px;
-            overflow-y: auto;
             flex: 1;
         }
         
@@ -216,20 +316,6 @@
             margin-bottom: 5px;
         }
         
-        .card-change {
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .positive {
-            color: var(--success);
-        }
-        
-        .negative {
-            color: var(--danger);
-        }
-        
         .section {
             background: white;
             border-radius: var(--radius);
@@ -251,90 +337,6 @@
             font-size: 1.4rem;
             color: var(--dark);
             font-weight: 700;
-        }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: var(--radius);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-        
-        .btn i {
-            margin-right: 8px;
-        }
-        
-        .btn:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn-secondary {
-            background-color: var(--secondary);
-        }
-        
-        .btn-secondary:hover {
-            background-color: var(--secondary-light);
-        }
-        
-        .btn-success {
-            background-color: var(--success);
-        }
-        
-        .btn-danger {
-            background-color: var(--danger);
-        }
-        
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .table th, .table td {
-            padding: 12px 15px;
-            text-align: right;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .table th {
-            background-color: var(--light);
-            color: var(--dark);
-            font-weight: 600;
-        }
-        
-        .table tr:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .status {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        
-        .status.confirmed {
-            background-color: rgba(46, 139, 87, 0.1);
-            color: var(--success);
-        }
-        
-        .status.pending {
-            background-color: rgba(255, 165, 0, 0.1);
-            color: var(--warning);
-        }
-        
-        .status.cancelled {
-            background-color: rgba(220, 20, 60, 0.1);
-            color: var(--danger);
         }
         
         .halls-grid {
@@ -400,14 +402,100 @@
             justify-content: space-between;
         }
         
-        .chart-container {
-            height: 300px;
-            margin-top: 20px;
+        .customer-view {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .customer-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .customer-title {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .customer-subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+        
+        .search-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+            background: var(--light);
+            padding: 20px;
+            border-radius: var(--radius);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .service-card:hover, .service-card.selected {
+            border-color: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .booking-summary {
+            background: var(--light);
+            padding: 25px;
+            border-radius: var(--radius);
+            margin-top: 30px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .summary-total {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid var(--primary);
         }
         
         @media (max-width: 992px) {
             .sidebar {
                 width: 80px;
+            }
+            
+            .main-content {
+                margin-right: 80px;
             }
             
             .logo h1, .menu-link span {
@@ -425,279 +513,211 @@
         }
         
         @media (max-width: 768px) {
-            .dashboard-cards {
+            .dashboard-cards, .halls-grid, .services-grid {
                 grid-template-columns: 1fr;
             }
             
-            .halls-grid {
+            .search-filters {
                 grid-template-columns: 1fr;
-            }
-            
-            .search-bar {
-                width: 200px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- الشريط الجانبي -->
-    <div class="sidebar">
-        <div class="logo">
-            <h1>قصور الأفراح</h1>
-            <p>نظام الإدارة المتكامل</p>
+    <!-- شاشة تسجيل الدخول -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-box">
+            <h1 class="login-title">عراق الأفراح</h1>
+            <p class="login-subtitle">النظام المتكامل لإدارة قاعات الأفراح</p>
+            
+            <div class="user-type-selector">
+                <button class="user-type active" data-type="admin">مدير النظام</button>
+                <button class="user-type" data-type="owner">صاحب قاعة</button>
+                <button class="user-type" data-type="customer">عميل</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">اسم المستخدم</label>
+                <input type="text" id="username" class="form-control" placeholder="أدخل اسم المستخدم">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">كلمة المرور</label>
+                <input type="password" id="password" class="form-control" placeholder="أدخل كلمة المرور">
+            </div>
+            
+            <button class="btn" id="loginBtn">تسجيل الدخول</button>
         </div>
-        
-        <ul class="menu">
-            <li class="menu-item">
-                <a href="#" class="menu-link active">
-                    <i class="fas fa-home"></i>
-                    <span>لوحة التحكم</span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>الحجوزات</span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <i class="fas fa-building"></i>
-                    <span>القاعات</span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <i class="fas fa-users"></i>
-                    <span>العملاء</span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <i class="fas fa-chart-line"></i>
-                    <span>التقارير</span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <i class="fas fa-cog"></i>
-                    <span>الإعدادات</span>
-                </a>
-            </li>
-        </ul>
     </div>
-    
-    <!-- المحتوى الرئيسي -->
-    <div class="main-content">
-        <!-- الشريط العلوي -->
-        <div class="top-bar">
-            <div class="search-bar">
-                <input type="text" placeholder="ابحث هنا...">
-                <i class="fas fa-search"></i>
+
+    <!-- واجهة مدير النظام -->
+    <div class="dashboard" id="adminDashboard">
+        <div class="sidebar">
+            <div class="logo">
+                <h1>عراق الأفراح</h1>
+                <p>لوحة التحكم</p>
             </div>
             
-            <div class="user-info">
-                <div>
-                    <h4>محمد أحمد</h4>
-                    <p>مدير النظام</p>
-                </div>
-                <img src="https://ui-avatars.com/api/?name=محمد+أحمد&background=8B4513&color=fff" alt="صورة المستخدم">
-            </div>
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="#" class="menu-link active">
+                        <i class="fas fa-home"></i>
+                        <span>الرئيسية</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <i class="fas fa-building"></i>
+                        <span>إدارة القاعات</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <i class="fas fa-users"></i>
+                        <span>أصحاب القاعات</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>الحجوزات</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>التقارير</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>تسجيل الخروج</span>
+                    </a>
+                </li>
+            </ul>
         </div>
         
-        <!-- المحتوى -->
-        <div class="content">
-            <!-- بطاقات الإحصائيات -->
-            <div class="dashboard-cards">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">الحجوزات اليوم</h3>
-                        <div class="card-icon booking">
-                            <i class="fas fa-calendar-check"></i>
-                        </div>
+        <div class="main-content">
+            <div class="top-bar">
+                <div></div>
+                <div class="user-info">
+                    <div>
+                        <h4>مريم عامر</h4>
+                        <p>مديرة النظام</p>
                     </div>
-                    <div class="card-value">18</div>
-                    <div class="card-change positive">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>+12% عن الأمس</span>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">الإيرادات</h3>
-                        <div class="card-icon revenue">
-                            <i class="fas fa-dollar-sign"></i>
-                        </div>
-                    </div>
-                    <div class="card-value">245,000 ر.س</div>
-                    <div class="card-change positive">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>+8% عن الشهر الماضي</span>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">القاعات المتاحة</h3>
-                        <div class="card-icon halls">
-                            <i class="fas fa-building"></i>
-                        </div>
-                    </div>
-                    <div class="card-value">12</div>
-                    <div class="card-change positive">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>+2 قاعات جديدة</span>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">عملاء جدد</h3>
-                        <div class="card-icon customers">
-                            <i class="fas fa-users"></i>
-                        </div>
-                    </div>
-                    <div class="card-value">42</div>
-                    <div class="card-change positive">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>+15% عن الأسبوع الماضي</span>
-                    </div>
+                    <img src="https://ui-avatars.com/api/?name=مريم+عامر&background=8B4513&color=fff" alt="صورة المديرة">
                 </div>
             </div>
             
-            <!-- قسم الحجوزات الحديثة -->
-            <div class="section">
-                <div class="section-header">
-                    <h2 class="section-title">الحجوزات الحديثة</h2>
-                    <a href="#" class="btn">
-                        <i class="fas fa-plus"></i>
-                        إضافة حجز جديد
-                    </a>
-                </div>
-                
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>رقم الحجز</th>
-                            <th>اسم العميل</th>
-                            <th>القاعة</th>
-                            <th>التاريخ</th>
-                            <th>الحالة</th>
-                            <th>الإجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>#12345</td>
-                            <td>أحمد السعدي</td>
-                            <td>قاعة الذهبية</td>
-                            <td>15/10/2023</td>
-                            <td><span class="status confirmed">مؤكد</span></td>
-                            <td>
-                                <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.9rem;">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="btn btn-danger" style="padding: 5px 10px; font-size: 0.9rem;">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#12346</td>
-                            <td>فاطمة العلي</td>
-                            <td>قاعة الياسمين</td>
-                            <td>20/10/2023</td>
-                            <td><span class="status pending">في الانتظار</span></td>
-                            <td>
-                                <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.9rem;">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="btn btn-danger" style="padding: 5px 10px; font-size: 0.9rem;">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#12347</td>
-                            <td>خالد الحربي</td>
-                            <td>قاعة القصر</td>
-                            <td>25/10/2023</td>
-                            <td><span class="status confirmed">مؤكد</span></td>
-                            <td>
-                                <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.9rem;">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="btn btn-danger" style="padding: 5px 10px; font-size: 0.9rem;">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <!-- قسم القاعات -->
-            <div class="section">
-                <div class="section-header">
-                    <h2 class="section-title">قاعات الأفراح</h2>
-                    <a href="#" class="btn btn-secondary">
-                        <i class="fas fa-plus"></i>
-                        إضافة قاعة جديدة
-                    </a>
-                </div>
-                
-                <div class="halls-grid">
-                    <div class="hall-card">
-                        <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-                        <div class="hall-content">
-                            <h3 class="hall-title">قاعة الذهبية</h3>
-                            <div class="hall-price">15,000 ر.س</div>
-                            <p>قاعة فاخرة بتصميم كلاسيكي أنيق تناسب الأذواق الراقية.</p>
-                            <div class="hall-features">
-                                <span class="feature">سعة 250 شخص</span>
-                                <span class="feature">تصميم كلاسيكي</span>
-                                <span class="feature">خدمة 5 نجوم</span>
+            <div class="content">
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">إجمالي القاعات</h3>
+                            <div class="card-icon halls">
+                                <i class="fas fa-building"></i>
                             </div>
-                            <div class="hall-actions">
-                                <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">تفاصيل</button>
-                                <button class="btn btn-secondary" style="padding: 8px 15px; font-size: 0.9rem;">تعديل</button>
-                            </div>
+                        </div>
+                        <div class="card-value">42</div>
+                        <div class="card-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+5 هذا الشهر</span>
                         </div>
                     </div>
                     
-                    <div class="hall-card">
-                        <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-                        <div class="hall-content">
-                            <h3 class="hall-title">قاعة الياسمين</h3>
-                            <div class="hall-price">12,000 ر.س</div>
-                            <p>قاعة عصرية بتصميم مودرن وأنيق مع إطلالة رائعة.</p>
-                            <div class="hall-features">
-                                <span class="feature">سعة 180 شخص</span>
-                                <span class="feature">تصميم مودرن</span>
-                                <span class="feature">إطلالة بانورامية</span>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">إجمالي الإيرادات</h3>
+                            <div class="card-icon revenue">
+                                <i class="fas fa-dollar-sign"></i>
                             </div>
-                            <div class="hall-actions">
-                                <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">تفاصيل</button>
-                                <button class="btn btn-secondary" style="padding: 8px 15px; font-size: 0.9rem;">تعديل</button>
-                            </div>
+                        </div>
+                        <div class="card-value">245,000,000 د.ع</div>
+                        <div class="card-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+12% عن الشهر الماضي</span>
                         </div>
                     </div>
                     
-                    <div class="hall-card">
-                        <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1348&q=80')"></div>
-                        <div class="hall-content">
-                            <h3 class="hall-title">قاعة القصر</h3>
-                            <div class="hall-price">20,000 ر.س</div>
-                            <p>قاعة فخمة بتصميم ملكي مع خدمات استثنائية.</p>
-                            <div class="hall-features">
-                                <span class="feature">سعة 400 شخص</span>
-                                <span class="feature">تصميم ملكي</span>
-                                <span class="feature">خدمة VIP</span>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">الحجوزات النشطة</h3>
+                            <div class="card-icon booking">
+                                <i class="fas fa-calendar-check"></i>
                             </div>
-                            <div class="hall-actions">
-                                <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">تفاصيل</button>
-                                <button class="btn btn-secondary" style="padding: 8px 15px; font-size: 0.9rem;">تعديل</button>
+                        </div>
+                        <div class="card-value">18</div>
+                        <div class="card-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+3 عن الأسبوع الماضي</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">أصحاب القاعات</h3>
+                            <div class="card-icon customers">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="card-value">28</div>
+                        <div class="card-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+2 جديد</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">أحدث القاعات المضافة</h2>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-plus"></i>
+                            إضافة قاعة جديدة
+                        </button>
+                    </div>
+                    
+                    <div class="halls-grid">
+                        <div class="hall-card">
+                            <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+                            <div class="hall-content">
+                                <h3 class="hall-title">قاعة بغداد الدولية</h3>
+                                <div class="hall-price">25,000,000 د.ع</div>
+                                <p>قاعة فاخرة بتصميم حديث في قلب بغداد.</p>
+                                <div class="hall-features">
+                                    <span class="feature">سعة 500 شخص</span>
+                                    <span class="feature">3 قاعات فرعية</span>
+                                    <span class="feature">مواقف سيارات</span>
+                                </div>
+                                <div class="hall-actions">
+                                    <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">تفاصيل</button>
+                                    <button class="btn btn-secondary" style="padding: 8px 15px; font-size: 0.9rem;">تعديل</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="hall-card">
+                            <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+                            <div class="hall-content">
+                                <h3 class="hall-title">قاعة الرشيد</h3>
+                                <div class="hall-price">18,000,000 د.ع</div>
+                                <p>قاعة كلاسيكية أنيقة في منطقة المنصور.</p>
+                                <div class="hall-features">
+                                    <span class="feature">سعة 300 شخص</span>
+                                    <span class="feature">ديكور تقليدي</span>
+                                    <span class="feature">حديقة خارجية</span>
+                                </div>
+                                <div class="hall-actions">
+                                    <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">تفاصيل</button>
+                                    <button class="btn btn-secondary" style="padding: 8px 15px; font-size: 0.9rem;">تعديل</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -706,28 +726,185 @@
         </div>
     </div>
 
+    <!-- واجهة العميل -->
+    <div class="dashboard" id="customerDashboard">
+        <div class="content">
+            <div class="customer-view">
+                <div class="customer-header">
+                    <h1 class="customer-title">عراق الأفراح</h1>
+                    <p class="customer-subtitle">احجز قاعة أحلامك لأهم يوم في حياتك</p>
+                </div>
+                
+                <div class="search-filters">
+                    <div class="form-group">
+                        <label>تاريخ المناسبة</label>
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>عدد المدعوين</label>
+                        <select class="form-control">
+                            <option>أقل من 100</option>
+                            <option>100 - 200</option>
+                            <option>200 - 300</option>
+                            <option>أكثر من 300</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>المحافظة</label>
+                        <select class="form-control">
+                            <option>بغداد</option>
+                            <option>البصرة</option>
+                            <option>أربيل</option>
+                            <option>النجف</option>
+                            <option>كربلاء</option>
+                        </select>
+                    </div>
+                    <button class="btn">بحث</button>
+                </div>
+                
+                <h2 style="margin: 25px 0 15px; color: var(--primary);">اختر الخدمات الإضافية</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-couch"></i>
+                        </div>
+                        <h3>كوشات وأركان</h3>
+                        <p>تصميم كوشات مخصصة للمناسبة</p>
+                        <div class="hall-price">2,000,000 د.ع</div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3>خدمات الطعام</h3>
+                        <p>بوفيه مفتوح وخدمات طعام فاخرة</p>
+                        <div class="hall-price">5,000,000 د.ع</div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <h3>فرق موسيقية</h3>
+                        <p>أفضل الفرق الموسيقية والطربية</p>
+                        <div class="hall-price">3,000,000 د.ع</div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-photo-video"></i>
+                        </div>
+                        <h3>التصوير</h3>
+                        <p>تصوير فوتوغرافي وفيديو احترافي</p>
+                        <div class="hall-price">2,500,000 د.ع</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">القاعات المتاحة</h2>
+                    </div>
+                    
+                    <div class="halls-grid">
+                        <div class="hall-card">
+                            <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+                            <div class="hall-content">
+                                <h3 class="hall-title">قاعة بغداد الدولية</h3>
+                                <div class="hall-price">25,000,000 د.ع</div>
+                                <p>قاعة فاخرة بتصميم حديث في قلب بغداد.</p>
+                                <div class="hall-features">
+                                    <span class="feature">سعة 500 شخص</span>
+                                    <span class="feature">3 قاعات فرعية</span>
+                                </div>
+                                <button class="btn" style="width: 100%; margin-top: 10px;">احجز الآن</button>
+                            </div>
+                        </div>
+                        
+                        <div class="hall-card">
+                            <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+                            <div class="hall-content">
+                                <h3 class="hall-title">قاعة الرشيد</h3>
+                                <div class="hall-price">18,000,000 د.ع</div>
+                                <p>قاعة كلاسيكية أنيقة في منطقة المنصور.</p>
+                                <div class="hall-features">
+                                    <span class="feature">سعة 300 شخص</span>
+                                    <span class="feature">ديكور تقليدي</span>
+                                </div>
+                                <button class="btn" style="width: 100%; margin-top: 10px;">احجز الآن</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="booking-summary">
+                    <h3 style="margin-bottom: 20px; color: var(--primary);">ملخص الحجز</h3>
+                    <div class="summary-item">
+                        <span>قاعة بغداد الدولية</span>
+                        <span>25,000,000 د.ع</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>كوشات وأركان</span>
+                        <span>2,000,000 د.ع</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>خدمات الطعام</span>
+                        <span>5,000,000 د.ع</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>المجموع الكلي</span>
+                        <span>32,000,000 د.ع</span>
+                    </div>
+                    <button class="btn btn-secondary" style="width: 100%; margin-top: 20px;">تأكيد الحجز</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // إضافة تفاعلية بسيطة للوحة التحكم
+        // نظام التحكم بين الواجهات
         document.addEventListener('DOMContentLoaded', function() {
-            // تفعيل العناصر النشطة في القائمة
-            const menuLinks = document.querySelectorAll('.menu-link');
-            menuLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    menuLinks.forEach(item => item.classList.remove('active'));
+            const loginScreen = document.getElementById('loginScreen');
+            const adminDashboard = document.getElementById('adminDashboard');
+            const customerDashboard = document.getElementById('customerDashboard');
+            const userTypes = document.querySelectorAll('.user-type');
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            // تغيير نوع المستخدم
+            userTypes.forEach(type => {
+                type.addEventListener('click', function() {
+                    userTypes.forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                 });
             });
             
-            // تأثيرات للبطاقات
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
-                });
+            // تسجيل الدخول
+            loginBtn.addEventListener('click', function() {
+                const activeType = document.querySelector('.user-type.active').dataset.type;
+                loginScreen.style.display = 'none';
                 
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
+                if (activeType === 'admin') {
+                    adminDashboard.style.display = 'flex';
+                } else if (activeType === 'customer') {
+                    customerDashboard.style.display = 'block';
+                }
+                // يمكن إضافة واجهة أصحاب القاعات هنا
+            });
+            
+            // تسجيل الخروج
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                adminDashboard.style.display = 'none';
+                customerDashboard.style.display = 'none';
+                loginScreen.style.display = 'flex';
+            });
+            
+            // تفعيل اختيار الخدمات
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.toggle('selected');
                 });
             });
         });
