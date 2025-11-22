@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عراق الأفراح - النظام المتكامل</title>
+    <title>عراق الأفراح - نظام الإدارة المتكامل</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -35,135 +35,17 @@
             line-height: 1.6;
         }
         
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, var(--primary), var(--dark));
-        }
-        
-        .login-box {
-            background: white;
-            padding: 40px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-        
-        .login-title {
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-size: 1.8rem;
-        }
-        
-        .login-subtitle {
-            color: var(--gray);
-            margin-bottom: 30px;
-        }
-        
-        .user-type-selector {
-            display: flex;
-            margin-bottom: 20px;
-            border-radius: var(--radius);
-            overflow: hidden;
-            border: 2px solid var(--primary);
-        }
-        
-        .user-type {
-            flex: 1;
-            padding: 12px;
-            background: white;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-        
-        .user-type.active {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-            text-align: right;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: var(--radius);
-            font-size: 1rem;
-            transition: border 0.3s ease;
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.2);
-        }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 25px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: var(--radius);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            width: 100%;
-        }
-        
-        .btn:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn i {
-            margin-left: 8px;
-        }
-        
-        .btn-secondary {
-            background-color: var(--secondary);
-        }
-        
-        .btn-secondary:hover {
-            background-color: var(--secondary-light);
-        }
-        
         .dashboard {
-            display: none;
+            display: flex;
             min-height: 100vh;
         }
         
         .sidebar {
-            width: 260px;
+            width: 280px;
             background: linear-gradient(180deg, var(--primary), var(--dark));
             color: white;
             padding: 20px 0;
-            transition: all 0.3s ease;
             box-shadow: var(--shadow);
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
         }
         
         .logo {
@@ -177,11 +59,6 @@
             font-size: 1.8rem;
             margin-bottom: 5px;
             color: var(--secondary);
-        }
-        
-        .logo p {
-            font-size: 0.9rem;
-            opacity: 0.8;
         }
         
         .menu {
@@ -214,7 +91,6 @@
         }
         
         .main-content {
-            margin-right: 260px;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -246,74 +122,7 @@
         .content {
             padding: 25px;
             flex: 1;
-        }
-        
-        .dashboard-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .card-title {
-            font-size: 1.1rem;
-            color: var(--dark);
-            font-weight: 600;
-        }
-        
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-        
-        .booking {
-            background-color: rgba(139, 0, 0, 0.1);
-            color: var(--accent);
-        }
-        
-        .revenue {
-            background-color: rgba(46, 139, 87, 0.1);
-            color: var(--success);
-        }
-        
-        .halls {
-            background-color: rgba(212, 175, 55, 0.1);
-            color: var(--secondary);
-        }
-        
-        .customers {
-            background-color: rgba(139, 69, 19, 0.1);
-            color: var(--primary);
-        }
-        
-        .card-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 5px;
+            overflow-y: auto;
         }
         
         .section {
@@ -339,9 +148,151 @@
             font-weight: 700;
         }
         
-        .halls-grid {
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--secondary-light);
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.2);
+        }
+        
+        .services-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .tab {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        .service-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .service-title {
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+        
+        .service-price {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        
+        .service-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .halls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
@@ -359,10 +310,31 @@
         }
         
         .hall-image {
-            height: 180px;
+            height: 200px;
             background-color: var(--light);
             background-size: cover;
             background-position: center;
+            position: relative;
+        }
+        
+        .hall-status {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-available {
+            background: var(--success);
+            color: white;
+        }
+        
+        .status-booked {
+            background: var(--danger);
+            color: white;
         }
         
         .hall-content {
@@ -373,6 +345,12 @@
             font-size: 1.3rem;
             margin-bottom: 10px;
             color: var(--dark);
+        }
+        
+        .hall-location {
+            color: var(--gray);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
         }
         
         .hall-price {
@@ -402,179 +380,121 @@
             justify-content: space-between;
         }
         
-        .customer-view {
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
             background: white;
             border-radius: var(--radius);
             padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
             box-shadow: var(--shadow);
-            max-width: 1000px;
-            margin: 0 auto;
         }
         
-        .customer-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .customer-title {
-            color: var(--primary);
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-        
-        .customer-subtitle {
-            color: var(--gray);
-            font-size: 1.1rem;
-        }
-        
-        .search-filters {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-            background: var(--light);
-            padding: 20px;
-            border-radius: var(--radius);
-        }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 25px 0;
-        }
-        
-        .service-card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 20px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .service-card:hover, .service-card.selected {
-            border-color: var(--secondary);
-            transform: translateY(-5px);
-        }
-        
-        .service-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-        
-        .booking-summary {
-            background: var(--light);
-            padding: 25px;
-            border-radius: var(--radius);
-            margin-top: 30px;
-        }
-        
-        .summary-item {
+        .modal-header {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #ddd;
+            align-items: center;
+            margin-bottom: 20px;
         }
         
-        .summary-total {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 2px solid var(--primary);
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--dark);
         }
         
-        @media (max-width: 992px) {
-            .sidebar {
-                width: 80px;
-            }
-            
-            .main-content {
-                margin-right: 80px;
-            }
-            
-            .logo h1, .menu-link span {
-                display: none;
-            }
-            
-            .menu-link {
-                justify-content: center;
-            }
-            
-            .menu-link i {
-                margin-left: 0;
-                font-size: 1.5rem;
-            }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
         
         @media (max-width: 768px) {
-            .dashboard-cards, .halls-grid, .services-grid {
+            .form-row {
                 grid-template-columns: 1fr;
             }
             
-            .search-filters {
+            .services-grid, .halls-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .dashboard {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
             }
         }
     </style>
 </head>
 <body>
-    <!-- شاشة تسجيل الدخول -->
-    <div class="login-container" id="loginScreen">
-        <div class="login-box">
-            <h1 class="login-title">عراق الأفراح</h1>
-            <p class="login-subtitle">النظام المتكامل لإدارة قاعات الأفراح</p>
-            
-            <div class="user-type-selector">
-                <button class="user-type active" data-type="admin">مدير النظام</button>
-                <button class="user-type" data-type="owner">صاحب قاعة</button>
-                <button class="user-type" data-type="customer">عميل</button>
-            </div>
-            
-            <div class="form-group">
-                <label for="username">اسم المستخدم</label>
-                <input type="text" id="username" class="form-control" placeholder="أدخل اسم المستخدم">
-            </div>
-            
-            <div class="form-group">
-                <label for="password">كلمة المرور</label>
-                <input type="password" id="password" class="form-control" placeholder="أدخل كلمة المرور">
-            </div>
-            
-            <button class="btn" id="loginBtn">تسجيل الدخول</button>
-        </div>
-    </div>
-
-    <!-- واجهة مدير النظام -->
-    <div class="dashboard" id="adminDashboard">
+    <!-- لوحة التحكم -->
+    <div class="dashboard">
+        <!-- الشريط الجانبي -->
         <div class="sidebar">
             <div class="logo">
                 <h1>عراق الأفراح</h1>
-                <p>لوحة التحكم</p>
+                <p>نظام الإدارة المتكامل</p>
             </div>
             
             <ul class="menu">
                 <li class="menu-item">
-                    <a href="#" class="menu-link active">
+                    <a href="#" class="menu-link">
                         <i class="fas fa-home"></i>
                         <span>الرئيسية</span>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="#" class="menu-link">
+                    <a href="#" class="menu-link active">
                         <i class="fas fa-building"></i>
                         <span>إدارة القاعات</span>
                     </a>
                 </li>
                 <li class="menu-item">
                     <a href="#" class="menu-link">
-                        <i class="fas fa-users"></i>
-                        <span>أصحاب القاعات</span>
+                        <i class="fas fa-couch"></i>
+                        <span>الكوشات والأركان</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <i class="fas fa-utensils"></i>
+                        <span>خدمات الطعام</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <i class="fas fa-music"></i>
+                        <span>الفرق الموسيقية</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <i class="fas fa-photo-video"></i>
+                        <span>خدمات التصوير</span>
                     </a>
                 </li>
                 <li class="menu-item">
@@ -585,28 +505,19 @@
                 </li>
                 <li class="menu-item">
                     <a href="#" class="menu-link">
-                        <i class="fas fa-chart-line"></i>
-                        <span>التقارير</span>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
                         <i class="fas fa-cog"></i>
                         <span>الإعدادات</span>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link" id="logoutBtn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>تسجيل الخروج</span>
                     </a>
                 </li>
             </ul>
         </div>
         
+        <!-- المحتوى الرئيسي -->
         <div class="main-content">
             <div class="top-bar">
-                <div></div>
+                <div>
+                    <h2>إدارة القاعات والخدمات</h2>
+                </div>
                 <div class="user-info">
                     <div>
                         <h4>مريم عامر</h4>
@@ -617,108 +528,83 @@
             </div>
             
             <div class="content">
-                <div class="dashboard-cards">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">إجمالي القاعات</h3>
-                            <div class="card-icon halls">
-                                <i class="fas fa-building"></i>
-                            </div>
-                        </div>
-                        <div class="card-value">42</div>
-                        <div class="card-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+5 هذا الشهر</span>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">إجمالي الإيرادات</h3>
-                            <div class="card-icon revenue">
-                                <i class="fas fa-dollar-sign"></i>
-                            </div>
-                        </div>
-                        <div class="card-value">245,000,000 د.ع</div>
-                        <div class="card-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+12% عن الشهر الماضي</span>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">الحجوزات النشطة</h3>
-                            <div class="card-icon booking">
-                                <i class="fas fa-calendar-check"></i>
-                            </div>
-                        </div>
-                        <div class="card-value">18</div>
-                        <div class="card-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+3 عن الأسبوع الماضي</span>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">أصحاب القاعات</h3>
-                            <div class="card-icon customers">
-                                <i class="fas fa-users"></i>
-                            </div>
-                        </div>
-                        <div class="card-value">28</div>
-                        <div class="card-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+2 جديد</span>
-                        </div>
-                    </div>
-                </div>
-                
+                <!-- قسم إدارة القاعات -->
                 <div class="section">
                     <div class="section-header">
-                        <h2 class="section-title">أحدث القاعات المضافة</h2>
-                        <button class="btn btn-secondary">
+                        <h2 class="section-title">قاعات الأفراح</h2>
+                        <button class="btn btn-secondary" id="addHallBtn">
                             <i class="fas fa-plus"></i>
                             إضافة قاعة جديدة
                         </button>
                     </div>
                     
-                    <div class="halls-grid">
-                        <div class="hall-card">
-                            <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-                            <div class="hall-content">
-                                <h3 class="hall-title">قاعة بغداد الدولية</h3>
-                                <div class="hall-price">25,000,000 د.ع</div>
-                                <p>قاعة فاخرة بتصميم حديث في قلب بغداد.</p>
-                                <div class="hall-features">
-                                    <span class="feature">سعة 500 شخص</span>
-                                    <span class="feature">3 قاعات فرعية</span>
-                                    <span class="feature">مواقف سيارات</span>
-                                </div>
-                                <div class="hall-actions">
-                                    <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">تفاصيل</button>
-                                    <button class="btn btn-secondary" style="padding: 8px 15px; font-size: 0.9rem;">تعديل</button>
-                                </div>
-                            </div>
+                    <div class="halls-grid" id="hallsContainer">
+                        <!-- القاعات تضاف هنا عن طريق JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- قسم إدارة الخدمات -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">الخدمات الإضافية</h2>
+                    </div>
+                    
+                    <div class="services-tabs">
+                        <button class="tab active" data-tab="kosh">الكوشات والأركان</button>
+                        <button class="tab" data-tab="food">خدمات الطعام</button>
+                        <button class="tab" data-tab="music">الفرق الموسيقية</button>
+                        <button class="tab" data-tab="photo">خدمات التصوير</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="koshTab">
+                        <div class="section-header">
+                            <h3>إدارة الكوشات والأركان</h3>
+                            <button class="btn" id="addKoshBtn">
+                                <i class="fas fa-plus"></i>
+                                إضافة كوشة جديدة
+                            </button>
                         </div>
-                        
-                        <div class="hall-card">
-                            <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-                            <div class="hall-content">
-                                <h3 class="hall-title">قاعة الرشيد</h3>
-                                <div class="hall-price">18,000,000 د.ع</div>
-                                <p>قاعة كلاسيكية أنيقة في منطقة المنصور.</p>
-                                <div class="hall-features">
-                                    <span class="feature">سعة 300 شخص</span>
-                                    <span class="feature">ديكور تقليدي</span>
-                                    <span class="feature">حديقة خارجية</span>
-                                </div>
-                                <div class="hall-actions">
-                                    <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">تفاصيل</button>
-                                    <button class="btn btn-secondary" style="padding: 8px 15px; font-size: 0.9rem;">تعديل</button>
-                                </div>
-                            </div>
+                        <div class="services-grid" id="koshContainer">
+                            <!-- الكوشات تضاف هنا -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="foodTab">
+                        <div class="section-header">
+                            <h3>إدارة خدمات الطعام</h3>
+                            <button class="btn" id="addFoodBtn">
+                                <i class="fas fa-plus"></i>
+                                إضافة خدمة طعام
+                            </button>
+                        </div>
+                        <div class="services-grid" id="foodContainer">
+                            <!-- خدمات الطعام تضاف هنا -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="musicTab">
+                        <div class="section-header">
+                            <h3>إدارة الفرق الموسيقية</h3>
+                            <button class="btn" id="addMusicBtn">
+                                <i class="fas fa-plus"></i>
+                                إضافة فرقة موسيقية
+                            </button>
+                        </div>
+                        <div class="services-grid" id="musicContainer">
+                            <!-- الفرق الموسيقية تضاف هنا -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="photoTab">
+                        <div class="section-header">
+                            <h3>إدارة خدمات التصوير</h3>
+                            <button class="btn" id="addPhotoBtn">
+                                <i class="fas fa-plus"></i>
+                                إضافة خدمة تصوير
+                            </button>
+                        </div>
+                        <div class="services-grid" id="photoContainer">
+                            <!-- خدمات التصوير تضاف هنا -->
                         </div>
                     </div>
                 </div>
@@ -726,188 +612,410 @@
         </div>
     </div>
 
-    <!-- واجهة العميل -->
-    <div class="dashboard" id="customerDashboard">
-        <div class="content">
-            <div class="customer-view">
-                <div class="customer-header">
-                    <h1 class="customer-title">عراق الأفراح</h1>
-                    <p class="customer-subtitle">احجز قاعة أحلامك لأهم يوم في حياتك</p>
-                </div>
-                
-                <div class="search-filters">
-                    <div class="form-group">
-                        <label>تاريخ المناسبة</label>
-                        <input type="date" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>عدد المدعوين</label>
-                        <select class="form-control">
-                            <option>أقل من 100</option>
-                            <option>100 - 200</option>
-                            <option>200 - 300</option>
-                            <option>أكثر من 300</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>المحافظة</label>
-                        <select class="form-control">
-                            <option>بغداد</option>
-                            <option>البصرة</option>
-                            <option>أربيل</option>
-                            <option>النجف</option>
-                            <option>كربلاء</option>
-                        </select>
-                    </div>
-                    <button class="btn">بحث</button>
-                </div>
-                
-                <h2 style="margin: 25px 0 15px; color: var(--primary);">اختر الخدمات الإضافية</h2>
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-couch"></i>
-                        </div>
-                        <h3>كوشات وأركان</h3>
-                        <p>تصميم كوشات مخصصة للمناسبة</p>
-                        <div class="hall-price">2,000,000 د.ع</div>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                        <h3>خدمات الطعام</h3>
-                        <p>بوفيه مفتوح وخدمات طعام فاخرة</p>
-                        <div class="hall-price">5,000,000 د.ع</div>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-music"></i>
-                        </div>
-                        <h3>فرق موسيقية</h3>
-                        <p>أفضل الفرق الموسيقية والطربية</p>
-                        <div class="hall-price">3,000,000 د.ع</div>
-                    </div>
-                    
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-photo-video"></i>
-                        </div>
-                        <h3>التصوير</h3>
-                        <p>تصوير فوتوغرافي وفيديو احترافي</p>
-                        <div class="hall-price">2,500,000 د.ع</div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <div class="section-header">
-                        <h2 class="section-title">القاعات المتاحة</h2>
-                    </div>
-                    
-                    <div class="halls-grid">
-                        <div class="hall-card">
-                            <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-                            <div class="hall-content">
-                                <h3 class="hall-title">قاعة بغداد الدولية</h3>
-                                <div class="hall-price">25,000,000 د.ع</div>
-                                <p>قاعة فاخرة بتصميم حديث في قلب بغداد.</p>
-                                <div class="hall-features">
-                                    <span class="feature">سعة 500 شخص</span>
-                                    <span class="feature">3 قاعات فرعية</span>
-                                </div>
-                                <button class="btn" style="width: 100%; margin-top: 10px;">احجز الآن</button>
-                            </div>
-                        </div>
-                        
-                        <div class="hall-card">
-                            <div class="hall-image" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-                            <div class="hall-content">
-                                <h3 class="hall-title">قاعة الرشيد</h3>
-                                <div class="hall-price">18,000,000 د.ع</div>
-                                <p>قاعة كلاسيكية أنيقة في منطقة المنصور.</p>
-                                <div class="hall-features">
-                                    <span class="feature">سعة 300 شخص</span>
-                                    <span class="feature">ديكور تقليدي</span>
-                                </div>
-                                <button class="btn" style="width: 100%; margin-top: 10px;">احجز الآن</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="booking-summary">
-                    <h3 style="margin-bottom: 20px; color: var(--primary);">ملخص الحجز</h3>
-                    <div class="summary-item">
-                        <span>قاعة بغداد الدولية</span>
-                        <span>25,000,000 د.ع</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>كوشات وأركان</span>
-                        <span>2,000,000 د.ع</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>خدمات الطعام</span>
-                        <span>5,000,000 د.ع</span>
-                    </div>
-                    <div class="summary-total">
-                        <span>المجموع الكلي</span>
-                        <span>32,000,000 د.ع</span>
-                    </div>
-                    <button class="btn btn-secondary" style="width: 100%; margin-top: 20px;">تأكيد الحجز</button>
-                </div>
+    <!-- نافذة إضافة قاعة -->
+    <div class="modal" id="addHallModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">إضافة قاعة جديدة</h3>
+                <button class="close-modal">&times;</button>
             </div>
+            <form id="hallForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hallName">اسم القاعة</label>
+                        <input type="text" id="hallName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hallLocation">الموقع</label>
+                        <select id="hallLocation" class="form-control" required>
+                            <option value="">اختر المنطقة</option>
+                            <option value="المنصور">المنصور</option>
+                            <option value="الكاظمية">الكاظمية</option>
+                            <option value="الاعظمية">الاعظمية</option>
+                            <option value="الرشيد">الرشيد</option>
+                            <option value="الحارثية">الحارثية</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hallCapacity">السعة (عدد الأشخاص)</label>
+                        <input type="number" id="hallCapacity" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hallPrice">السعر (دينار عراقي)</label>
+                        <input type="number" id="hallPrice" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="hallImage">صورة القاعة (رابط URL)</label>
+                    <input type="url" id="hallImage" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label for="hallDescription">الوصف</label>
+                    <textarea id="hallDescription" class="form-control" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>الميزات</label>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 10px;">
+                        <label><input type="checkbox" name="features" value="مواقف سيارات"> مواقف سيارات</label>
+                        <label><input type="checkbox" name="features" value="قاعة نساء منفصلة"> قاعة نساء منفصلة</label>
+                        <label><input type="checkbox" name="features" value="شاشات عرض"> شاشات عرض</label>
+                        <label><input type="checkbox" name="features" value="تجهيزات صوتية"> تجهيزات صوتية</label>
+                        <label><input type="checkbox" name="features" value="تكييف مركزي"> تكييف مركزي</label>
+                        <label><input type="checkbox" name="features" value="مطبخ مجهز"> مطبخ مجهز</label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-secondary" style="width: 100%;">إضافة القاعة</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة إضافة خدمة -->
+    <div class="modal" id="addServiceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="serviceModalTitle">إضافة خدمة جديدة</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="serviceForm">
+                <input type="hidden" id="serviceType">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="serviceName">اسم الخدمة</label>
+                        <input type="text" id="serviceName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="servicePrice">السعر (دينار عراقي)</label>
+                        <input type="number" id="servicePrice" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="serviceDescription">الوصف</label>
+                    <textarea id="serviceDescription" class="form-control" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group" id="serviceSpecificFields">
+                    <!-- حقول إضافية حسب نوع الخدمة -->
+                </div>
+                
+                <button type="submit" class="btn btn-secondary" style="width: 100%;">إضافة الخدمة</button>
+            </form>
         </div>
     </div>
 
     <script>
-        // نظام التحكم بين الواجهات
-        document.addEventListener('DOMContentLoaded', function() {
-            const loginScreen = document.getElementById('loginScreen');
-            const adminDashboard = document.getElementById('adminDashboard');
-            const customerDashboard = document.getElementById('customerDashboard');
-            const userTypes = document.querySelectorAll('.user-type');
-            const loginBtn = document.getElementById('loginBtn');
-            const logoutBtn = document.getElementById('logoutBtn');
+        // قاعدة بيانات مؤقتة (في الواقع بتكون على السيرفر)
+        let halls = [
+            {
+                id: 1,
+                name: "قاعة بغداد الدولية",
+                location: "المنصور",
+                capacity: 500,
+                price: 25000000,
+                image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                description: "قاعة فاخرة بتصميم حديث في قلب بغداد",
+                features: ["مواقف سيارات", "قاعة نساء منفصلة", "شاشات عرض"],
+                status: "available"
+            },
+            {
+                id: 2,
+                name: "قاعة الرشيد",
+                location: "الرشيد",
+                capacity: 300,
+                price: 18000000,
+                image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                description: "قاعة كلاسيكية أنيقة في منطقة المنصور",
+                features: ["تجهيزات صوتية", "تكييف مركزي"],
+                status: "booked"
+            }
+        ];
+
+        let services = {
+            kosh: [
+                { id: 1, name: "كوشة عروس ملكية", price: 2000000, description: "كوشة فاخرة بتصميم ملكي" },
+                { id: 2, name: "ركن استقبال", price: 1000000, description: "ركن استقبال أنيق للضيوف" }
+            ],
+            food: [
+                { id: 1, name: "بوفيه مفتوح", price: 5000000, description: "بوفيه مفتوح مع تشكيلة واسعة" },
+                { id: 2, name: "مأكولات عراقية", price: 3000000, description: "أفضل المأكولات العراقية التقليدية" }
+            ],
+            music: [
+                { id: 1, name: "فرقة طربية", price: 3000000, description: "فرقة طربية محترفة" },
+                { id: 2, name: "DJ حديث", price: 1500000, description: "DJ مع أحدث الأغاني" }
+            ],
+            photo: [
+                { id: 1, name: "تصوير فوتوغرافي", price: 2500000, description: "تصوير احترافي طوال المناسبة" },
+                { id: 2, name: "تصوير فيديو", price: 2000000, description: "تصوير فيديو مع مونتاج احترافي" }
+            ]
+        };
+
+        // دالة لعرض القاعات
+        function displayHalls() {
+            const container = document.getElementById('hallsContainer');
+            container.innerHTML = '';
             
-            // تغيير نوع المستخدم
-            userTypes.forEach(type => {
-                type.addEventListener('click', function() {
-                    userTypes.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                });
+            halls.forEach(hall => {
+                const hallCard = `
+                    <div class="hall-card">
+                        <div class="hall-image" style="background-image: url('${hall.image}')">
+                            <div class="hall-status ${hall.status === 'available' ? 'status-available' : 'status-booked'}">
+                                ${hall.status === 'available' ? 'متاحة' : 'محجوزة'}
+                            </div>
+                        </div>
+                        <div class="hall-content">
+                            <h3 class="hall-title">${hall.name}</h3>
+                            <div class="hall-location">${hall.location}</div>
+                            <div class="hall-price">${hall.price.toLocaleString()} د.ع</div>
+                            <p>${hall.description}</p>
+                            <div class="hall-features">
+                                ${hall.features.map(feature => <span class="feature">${feature}</span>).join('')}
+                            </div>
+                            <div class="hall-actions">
+                                <button class="btn" onclick="editHall(${hall.id})">تعديل</button>
+                                <button class="btn btn-danger" onclick="deleteHall(${hall.id})">حذف</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += hallCard;
             });
-            
-            // تسجيل الدخول
-            loginBtn.addEventListener('click', function() {
-                const activeType = document.querySelector('.user-type.active').dataset.type;
-                loginScreen.style.display = 'none';
-                
-                if (activeType === 'admin') {
-                    adminDashboard.style.display = 'flex';
-                } else if (activeType === 'customer') {
-                    customerDashboard.style.display = 'block';
+        }
+
+        // دالة لعرض الخدمات
+        function displayServices() {
+            for (const type in services) {
+                const container = document.getElementById(${type}Container);
+                if (container) {
+                    container.innerHTML = '';
+                    services[type].forEach(service => {
+                        const serviceCard = `
+                            <div class="service-card">
+                                <div class="service-header">
+                                    <h4 class="service-title">${service.name}</h4>
+                                    <div class="service-price">${service.price.toLocaleString()} د.ع</div>
+                                </div>
+                                <p>${service.description}</p>
+                                <div class="service-actions">
+                                    <button class="btn" onclick="editService('${type}', ${service.id})">تعديل</button>
+                                    <button class="btn btn-danger" onclick="deleteService('${type}', ${service.id})">حذف</button>
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += serviceCard;
+                    });
                 }
-                // يمكن إضافة واجهة أصحاب القاعات هنا
-            });
+            }
+        }
+
+        // إدارة النوافذ المنبثقة
+        document.addEventListener('DOMContentLoaded', function() {
+            displayHalls();
+            displayServices();
             
-            // تسجيل الخروج
-            logoutBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                adminDashboard.style.display = 'none';
-                customerDashboard.style.display = 'none';
-                loginScreen.style.display = 'flex';
-            });
-            
-            // تفعيل اختيار الخدمات
-            const serviceCards = document.querySelectorAll('.service-card');
-            serviceCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    this.classList.toggle('selected');
+            // تبويبات الخدمات
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    
+                    // إزالة النشاط من جميع التبويبات
+                    tabs.forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    
+                    // تفعيل التبويب المختار
+                    this.classList.add('active');
+                    document.getElementById(${tabId}Tab).classList.add('active');
                 });
+            });
+            
+            // نافذة إضافة قاعة
+            const addHallBtn = document.getElementById('addHallBtn');
+            const addHallModal = document.getElementById('addHallModal');
+            const hallForm = document.getElementById('hallForm');
+            
+            addHallBtn.addEventListener('click', function() {
+                addHallModal.style.display = 'flex';
+            });
+            
+            hallForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const newHall = {
+                    id: halls.length + 1,
+                    name: document.getElementById('hallName').value,
+                    location: document.getElementById('hallLocation').value,
+                    capacity: parseInt(document.getElementById('hallCapacity').value),
+                    price: parseInt(document.getElementById('hallPrice').value),
+                    image: document.getElementById('hallImage').value,
+                    description: document.getElementById('hallDescription').value,
+                    features: Array.from(document.querySelectorAll('input[name="features"]:checked')).map(cb => cb.value),
+                    status: 'available'
+                };
+                
+                halls.push(newHall);
+                displayHalls();
+                addHallModal.style.display = 'none';
+                hallForm.reset();
+                alert('تم إضافة القاعة بنجاح!');
+            });
+            
+            // نافذة إضافة خدمة
+            const serviceButtons = ['addKoshBtn', 'addFoodBtn', 'addMusicBtn', 'addPhotoBtn'];
+            const addServiceModal = document.getElementById('addServiceModal');
+            const serviceForm = document.getElementById('serviceForm');
+            const serviceModalTitle = document.getElementById('serviceModalTitle');
+            const serviceSpecificFields = document.getElementById('serviceSpecificFields');
+            
+            serviceButtons.forEach(btnId => {
+                document.getElementById(btnId).addEventListener('click', function() {
+                    const serviceType = btnId.replace('add', '').replace('Btn', '').toLowerCase();
+                    document.getElementById('serviceType').value = serviceType;
+                    
+                    // تحديد عنوان النافذة حسب نوع الخدمة
+                    const titles = {
+                        'kosh': 'إضافة كوشة جديدة',
+                        'food': 'إضافة خدمة طعام',
+                        'music': 'إضافة فرقة موسيقية',
+                        'photo': 'إضافة خدمة تصوير'
+                    };
+                    serviceModalTitle.textContent = titles[serviceType];
+                    
+                    // إضافة حقول إضافية حسب نوع الخدمة
+                    let additionalFields = '';
+                    if (serviceType === 'kosh') {
+                        additionalFields = `
+                            <div class="form-group">
+                                <label for="koshType">نوع الكوشة</label>
+                                <select id="koshType" class="form-control">
+                                    <option value="ملكية">ملكية</option>
+                                    <option value="عصرية">عصرية</option>
+                                    <option value="تقليدية">تقليدية</option>
+                                </select>
+                            </div>
+                        `;
+                    } else if (serviceType === 'food') {
+                        additionalFields = `
+                            <div class="form-group">
+                                <label for="foodType">نوع الطعام</label>
+                                <select id="foodType" class="form-control">
+                                    <option value="عراقي">عراقي</option>
+                                    <option value="عربي">عربي</option>
+                                    <option value="عالمي">عالمي</option>
+                                </select>
+                            </div>
+                        `;
+                    }
+                    
+                    serviceSpecificFields.innerHTML = additionalFields;
+                    addServiceModal.style.display = 'flex';
+                });
+            });
+            
+            serviceForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const serviceType = document.getElementById('serviceType').value;
+                const newService = {
+                    id: services[serviceType].length + 1,
+                    name: document.getElementById('serviceName').value,
+                    price: parseInt(document.getElementById('servicePrice').value),
+                    description: document.getElementById('serviceDescription').value
+                };
+                
+                services[serviceType].push(newService);
+                displayServices();
+                addServiceModal.style.display = 'none';
+                serviceForm.reset();
+                alert('تم إضافة الخدمة بنجاح!');
+            });
+            
+            // إغلاق النوافذ
+            const closeButtons = document.querySelectorAll('.close-modal');
+            closeButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+            
+            // إغلاق عند النقر خارج النافذة
+            window.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                }
             });
         });
+
+        // دوال التعديل والحذف
+        function editHall(id) {
+            const hall = halls.find(h => h.id === id);
+            if (hall) {
+                document.getElementById('hallName').value = hall.name;
+                document.getElementById('hallLocation').value = hall.location;
+                document.getElementById('hallCapacity').value = hall.capacity;
+                document.getElementById('hallPrice').value = hall.price;
+                document.getElementById('hallImage').value = hall.image;
+                document.getElementById('hallDescription').value = hall.description;
+                
+                // تفعيل الميزات
+                document.querySelectorAll('input[name="features"]').forEach(cb => {
+                    cb.checked = hall.features.includes(cb.value);
+                });
+                
+                document.getElementById('addHallModal').style.display = 'flex';
+                
+                // تغيير النموذج للتعديل
+                const form = document.getElementById('hallForm');
+                form.onsubmit = function(e) {
+                    e.preventDefault();
+                    
+                    hall.name = document.getElementById('hallName').value;
+                    hall.location = document.getElementById('hallLocation').value;
+                    hall.capacity = parseInt(document.getElementById('hallCapacity').value);
+                    hall.price = parseInt(document.getElementById('hallPrice').value);
+                    hall.image = document.getElementById('hallImage').value;
+                    hall.description = document.getElementById('hallDescription').value;
+                    hall.features = Array.from(document.querySelectorAll('input[name="features"]:checked')).map(cb => cb.value);
+                    
+                    displayHalls();
+                    document.getElementById('addHallModal').style.display = 'none';
+                    form.reset();
+                    alert('تم تعديل القاعة بنجاح!');
+                };
+            }
+        }
+
+        function deleteHall(id) {
+            if (confirm('هل أنت متأكد من حذف هذه القاعة؟')) {
+                halls = halls.filter(h => h.id !== id);
+                displayHalls();
+                alert('تم حذف القاعة بنجاح');
+            }
+        }
+
+        function editService(type, id) {
+            const service = services[type].find(s => s.id === id);
+            if (service) {
+                // افتح نافذة التعديل
+                alert(سيتم فتح نافذة تعديل الخدمة: ${service.name});
+                // هنا يمكنك تنفيذ منطق التعديل
+            }
+        }
+
+        function deleteService(type, id) {
+            if (confirm('هل أنت متأكد من حذف هذه الخدمة؟')) {
+                services[type] = services[type].filter(s => s.id !== id);
+                displayServices();
+                alert('تم حذف الخدمة بنجاح');
+            }
+        }
     </script>
 </body>
 </html>
