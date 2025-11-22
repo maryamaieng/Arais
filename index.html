@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرايس - نظام إدارة القاعات</title>
+    <title>عرايس - حجز قاعات الأعراس</title>
     <style>
         * {
             margin: 0;
@@ -13,566 +13,72 @@
         }
         
         body {
-            background: #f0f2f5;
+            background: #f8f9fa;
             padding: 20px;
-        }
-
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
         .header {
-            background: linear-gradient(135deg, #28a745, #20c997);
+            background: #8B4513;
             color: white;
-            padding: 25px;
+            padding: 30px;
             text-align: center;
-        }
-
-        .header h1 {
-            font-size: 1.8em;
-            margin-bottom: 10px;
-        }
-
-        .tabs {
-            display: flex;
-            background: #f8f9fa;
-            padding: 10px;
-            border-bottom: 2px solid #e9ecef;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-weight: bold;
-            border-radius: 8px;
-            margin: 0 5px;
-            transition: all 0.3s ease;
-        }
-
-        .tab.active {
-            background: #28a745;
-            color: white;
-        }
-
-        .tab:hover {
-            background: #e9ecef;
-        }
-
-        .tab.active:hover {
-            background: #218838;
-        }
-
-        .content {
-            padding: 20px;
-            min-height: 400px;
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
 
         .hall-card {
             background: white;
-            border: 2px solid #e9ecef;
+            padding: 20px;
+            margin: 15px 0;
             border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            position: relative;
-            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .hall-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .hall-card.available {
-            border-left: 4px solid #28a745;
-        }
-
-        .hall-card.booked {
-            border-left: 4px solid #dc3545;
-        }
-
-        .status {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .status.available {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status.booked {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        button {
-            background: #28a745;
+        .book-btn {
+            background: #8B4513;
             color: white;
+            padding: 10px 20px;
             border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin: 5px 0;
+            border-radius: 5px;
             width: 100%;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        button:hover {
-            background: #218838;
-            transform: translateY(-1px);
-        }
-
-        button:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .notification {
-            background: #e8f5e8;
-            border: 1px solid #28a745;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 8px 0;
-            transition: all 0.3s ease;
-        }
-
-        .notification:hover {
-            background: #d4edda;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
             margin-top: 10px;
-        }
-
-        .action-buttons button {
-            flex: 1;
-        }
-
-        .btn-success {
-            background: #28a745;
-        }
-
-        .btn-success:hover {
-            background: #218838;
-        }
-
-        .btn-danger {
-            background: #dc3545;
-        }
-
-        .btn-danger:hover {
-            background: #c82333;
-        }
-
-        .btn-warning {
-            background: #ffc107;
-            color: #212529;
-        }
-
-        .btn-warning:hover {
-            background: #e0a800;
-        }
-
-        h2 {
-            color: #28a745;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        p {
-            color: #495057;
-            margin: 5px 0;
-        }
-
-        strong {
-            color: #28a745;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎊 عرايس - نظام إدارة القاعات</h1>
-            <p>ربط مباشر بين العملاء وأصحاب القاعات</p>
-        </div>
+    <div class="header">
+        <h1>🎊 عرايس</h1>
+        <p>منصة حجز قاعات الأعراس</p>
+    </div>
 
-        <div class="tabs">
-            <button class="tab active" onclick="showPage('client')">👥 العملاء</button>
-            <button class="tab" onclick="showPage('owner')">🏢 أصحاب القاعات</button>
-            <button class="tab" onclick="showPage('notifications')">📱 الإشعارات</button>
-        </div>
+    <div class="hall-card">
+        <h3>قاعة الرشيد للمناسبات</h3>
+        <p>📍 بغداد - المنصور</p>
+        <p>💰 4,000,000 دينار</p>
+        <button class="book-btn">احجز الآن</button>
+    </div>
 
-        <div class="content">
-            <!-- صفحة العملاء -->
-            <div id="client" class="page active">
-                <h2>🔍 ابحث عن قاعة لحفلتك</h2>
-                <div id="client-halls">
-                    <!-- القاعات تظهر هنا -->
-                </div>
-            </div>
+    <div class="hall-card">
+        <h3>قاعة بابل الدولية</h3>
+        <p>📍 بغداد - الجادرية</p>
+        <p>💰 3,500,000 دينار</p>
+        <button class="book-btn">احجز الآن</button>
+    </div>
 
-            <!-- صفحة أصحاب القاعات -->
-            <div id="owner" class="page">
-                <h2>🏢 إدارة قاعاتك</h2>
-                <button onclick="addNewHall()" style="background: #20c997; margin-bottom: 15px;">➕ إضافة قاعة جديدة</button>
-                <div id="owner-halls">
-                    <!-- قاعات المالك تظهر هنا -->
-                </div>
-            </div>
-
-            <!-- صفحة الإشعارات -->
-            <div id="notifications" class="page">
-                <h2>📱 الإشعارات والحجوزات</h2>
-                <div id="notifications-list">
-                    <!-- الإشعارات تظهر هنا -->
-                </div>
-            </div>
-        </div>
+    <div class="hall-card">
+        <h3>قاعة كربلاء الكبرى</h3>
+        <p>📍 كربلاء - قرب الحرم</p>
+        <p>💰 3,200,000 دينار</p>
+        <button class="book-btn">احجز الآن</button>
     </div>
 
     <script>
-        // بيانات التطبيق
-        let halls = [
-            {
-                id: 1,
-                name: "قاعة الرشيد",
-                area: "المنصور",
-                capacity: 600,
-                price: 4000000,
-                status: "available",
-                owner: "أحمد العلي",
-                ownerPhone: "07801234567",
-                bookings: []
-            },
-            {
-                id: 2, 
-                name: "قاعة بابل",
-                area: "الجادرية", 
-                capacity: 500,
-                price: 3500000,
-                status: "available",
-                owner: "محمد الكاظمي", 
-                ownerPhone: "07807654321",
-                bookings: []
-            }
-        ];
-
-        let notifications = [];
-
-        // عرض القاعات للعملاء
-        function displayClientHalls() {
-            const container = document.getElementById('client-halls');
-            container.innerHTML = '';
-
-            halls.forEach(hall => {
-                const statusClass = hall.status === 'available' ? 'available' : 'booked';
-                const statusText = hall.status === 'available' ? 'متاحة' : 'محجوزة';
-                
-                const hallCard = `
-                    <div class="hall-card ${statusClass}">
-                        <span class="status ${statusClass}">${statusText}</span>
-                        <h3>${hall.name}</h3>
-                        <p><strong>📍 المنطقة:</strong> ${hall.area}</p>
-                        <p><strong>👥 السعة:</strong> ${hall.capacity} شخص</p>
-                        <p><strong>💰 السعر:</strong> ${hall.price.toLocaleString()} دينار</p>
-                        <p><strong>📞 صاحب القاعة:</strong> ${hall.owner} - ${hall.ownerPhone}</p>
-                        <button onclick="bookHall(${hall.id})" ${hall.status !== 'available' ? 'disabled' : ''}>
-                            ${hall.status === 'available' ? '🎉 احجز الآن' : '❌ محجوزة'}
-                        </button>
-                    </div>
-                `;
-                container.innerHTML += hallCard;
+        document.querySelectorAll('.book-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const hallName = this.parentElement.querySelector('h3').textContent;
+                alert('شكراً لحجزك! سيتم التواصل معك: ' + hallName);
             });
-        }
-
-        // عرض قاعات المالك
-        function displayOwnerHalls() {
-            const container = document.getElementById('owner-halls');
-            container.innerHTML = '';
-
-            halls.forEach(hall => {
-                const bookingsCount = hall.bookings.length;
-                const hallCard = `
-                    <div class="hall-card">
-                        <h3>${hall.name}</h3>
-                        <p><strong>الحالة:</strong> <span class="status ${hall.status}">${hall.status === 'available' ? 'متاحة' : 'محجوزة'}</span></p>
-                        <p><strong>عدد الحجوزات:</strong> ${bookingsCount}</p>
-                        <div class="action-buttons">
-                            <button class="btn-warning" onclick="viewBookings(${hall.id})">📅 الحجوزات</button>
-                            <button class="btn-success" onclick="changeHallStatus(${hall.id})">🔄 تغيير الحالة</button>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += hallCard;
-            });
-        }
-
-        // عرض الإشعارات
-        function displayNotifications() {
-            const container = document.getElementById('notifications-list');
-            container.innerHTML = '';
-
-            if (notifications.length === 0) {
-                container.innerHTML = '<div class="notification"><p>لا توجد إشعارات حالياً</p></div>';
-                return;
-            }
-
-            notifications.forEach(notif => {
-                const notification = `
-                    <div class="notification">
-                        <strong>${notif.title}</strong>
-                        <p>${notif.message}</p>
-                        <small>⏰ ${notif.time}</small>
-                        ${notif.bookingId ? `
-                            <div class="action-buttons">
-                                <button class="btn-success" onclick="confirmBooking(${notif.bookingId})">✅ قبول الحجز</button>
-                                <button class="btn-danger" onclick="rejectBooking(${notif.bookingId})">❌ رفض الحجز</button>
-                            </div>
-                        ` : ''}
-                    </div>
-                `;
-                container.innerHTML += notification;
-            });
-        }
-
-        // حجز قاعة
-        function bookHall(hallId) {
-            const hall = halls.find(h => h.id === hallId);
-            
-            const name = prompt("👤 أدخل اسمك:");
-            if (!name) return;
-
-            const phone = prompt("📞 أدخل رقم هاتفك:");
-            if (!phone) return;
-
-            const date = prompt("📅 أدخل تاريخ الحجز (مثال: 2024-12-25):");
-            if (!date) return;
-
-            // إنشاء حجز جديد
-            const booking = {
-                id: Date.now(),
-                customerName: name,
-                customerPhone: phone,
-                date: date,
-                status: 'pending'
-            };
-
-            hall.bookings.push(booking);
-            hall.status = 'booked';
-
-            // إضافة إشعار
-            notifications.push({
-                id: Date.now(),
-                title: 'حجز جديد 📅',
-                message: حجز جديد لـ ${hall.name} من ${name} (${phone}) في ${date},
-                time: new Date().toLocaleString('ar-IQ'),
-                bookingId: booking.id
-            });
-
-            alert('🎉 تم إرسال طلب الحجز! سيتم التواصل معك للتأكيد.');
-            
-            // تحديث العرض
-            displayClientHalls();
-            displayOwnerHalls();
-            displayNotifications();
-        }
-
-        // تأكيد الحجز
-        function confirmBooking(bookingId) {
-            let found = false;
-            
-            for (let hall of halls) {
-                const booking = hall.bookings.find(b => b.id === bookingId);
-                if (booking) {
-                    booking.status = 'confirmed';
-                    hall.status = 'booked';
-                    found = true;
-                    
-                    notifications.push({
-                        id: Date.now(),
-                        title: 'تم تأكيد الحجز ✅',
-                        message: تم تأكيد حجز ${hall.name} للعميل ${booking.customerName},
-                        time: new Date().toLocaleString('ar-IQ')
-                    });
-                    
-                    alert('✅ تم تأكيد الحجز!');
-                    break;
-                }
-            }
-            
-            if (found) {
-                displayClientHalls();
-                displayOwnerHalls();
-                displayNotifications();
-            }
-        }
-
-        // رفض الحجز
-        function rejectBooking(bookingId) {
-            let found = false;
-            
-            for (let hall of halls) {
-                const bookingIndex = hall.bookings.findIndex(b => b.id === bookingId);
-                if (bookingIndex !== -1) {
-                    const booking = hall.bookings[bookingIndex];
-                    
-                    // إزالة الحجز
-                    hall.bookings.splice(bookingIndex, 1);
-                    hall.status = 'available';
-                    found = true;
-                    
-                    notifications.push({
-                        id: Date.now(),
-                        title: 'تم رفض الحجز ❌',
-                        message: تم رفض حجز ${hall.name} للعميل ${booking.customerName},
-                        time: new Date().toLocaleString('ar-IQ')
-                    });
-                    
-                    alert('❌ تم رفض الحجز!');
-                    break;
-                }
-            }
-            
-            if (found) {
-                displayClientHalls();
-                displayOwnerHalls();
-                displayNotifications();
-            }
-        }
-
-        // عرض حجوزات قاعة
-        function viewBookings(hallId) {
-            const hall = halls.find(h => h.id === hallId);
-            if (!hall.bookings || hall.bookings.length === 0) {
-                alert('📭 لا توجد حجوزات لهذه القاعة');
-                return;
-            }
-
-            let message = حجوزات ${hall.name}:\n\n;
-            hall.bookings.forEach(booking => {
-                message += 👤 العميل: ${booking.customerName}\n;
-                message += 📞 الهاتف: ${booking.customerPhone}\n;
-                message += 📅 التاريخ: ${booking.date}\n;
-                message += ✅ الحالة: ${booking.status}\n;
-                message += '────────────────────\n';
-            });
-            alert(message);
-        }
-
-        // تغيير حالة القاعة
-        function changeHallStatus(hallId) {
-            const hall = halls.find(h => h.id === hallId);
-            const newStatus = hall.status === 'available' ? 'booked' : 'available';
-            hall.status = newStatus;
-            
-            const statusText = newStatus === 'available' ? 'متاحة' : 'محجوزة';
-            alert(🔄 تم تغيير حالة ${hall.name} إلى ${statusText});
-            
-            displayClientHalls();
-            displayOwnerHalls();
-        }
-
-        // إضافة قاعة جديدة
-        function addNewHall() {
-            const name = prompt("🏢 اسم القاعة:");
-            if (!name) return;
-
-            const area = prompt("📍 المنطقة:");
-            if (!area) return;
-
-            const capacity = prompt("👥 السعة (عدد الأشخاص):");
-            if (!capacity) return;
-
-            const price = prompt("💰 السعر (دينار):");
-            if (!price) return;
-
-            const owner = prompt("👤 اسم صاحب القاعة:");
-            if (!owner) return;
-
-            const ownerPhone = prompt("📞 هاتف صاحب القاعة:");
-            if (!ownerPhone) return;
-
-            const newHall = {
-                id: halls.length + 1,
-                name: name,
-                area: area,
-                capacity: parseInt(capacity),
-                price: parseInt(price),
-                status: "available",
-                owner: owner,
-                ownerPhone: ownerPhone,
-                bookings: []
-            };
-
-            halls.push(newHall);
-            
-            notifications.push({
-                id: Date.now(),
-                title: 'قاعة جديدة 🎊',
-                message: تم إضافة قاعة ${name} في ${area},
-                time: new Date().toLocaleString('ar-IQ')
-            });
-            
-            alert('✅ تم إضافة القاعة بنجاح!');
-            
-            displayClientHalls();
-            displayOwnerHalls();
-            displayNotifications();
-        }
-
-        // تبديل الصفحات
-        function showPage(pageId) {
-            // إخفاء كل الصفحات
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // إظهار الصفحة المطلوبة
-            document.getElementById(pageId).classList.add('active');
-            
-            // تحديث الأزرار
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            // تحديث البيانات
-            if (pageId === 'client') displayClientHalls();
-            if (pageId === 'owner') displayOwnerHalls();
-            if (pageId === 'notifications') displayNotifications();
-        }
-
-        // التهيئة الأولى عند تحميل الصفحة
-        window.onload = function() {
-            displayClientHalls();
-            displayOwnerHalls();
-            displayNotifications();
-        };
+        });
     </script>
 </body>
 </html>
