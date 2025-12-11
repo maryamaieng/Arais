@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق زفاف - إدارة وحجز القاعات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ------------------ التصميم العام ------------------ */
+        :root {
+            --primary-color: #A08855; /* الذهبي الراقي */
+            --secondary-color: #3C454F; /* الأزرق الداكن */
+            --background-light: #F8F8F8;
+            --text-dark: #333333;
+            --success-color: #4CAF50;
+            --danger-color: #F44336;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        nav {
+            margin-top: 15px;
+            display: flex;
+            gap: 20px;
+        }
+        nav button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s;
+        }
+        nav button.active, nav button:hover {
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            display: none; /* يتم إظهاره عبر JavaScript */
+        }
+        .section.active {
+            display: block;
+        }
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* ------------------ بطاقات القاعات ------------------ */
+        .hall-card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .hall-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .hall-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        .hall-card-img {
+            height: 200px;
+            background-color: #ccc; /* صور وهمية */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            color: var(--text-dark);
+        }
+        .hall-card-info {
+            padding: 15px;
+        }
+        .hall-card-info h3 {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        .hall-card-info p {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+        .hall-card-info .price {
+            font-size: 1.2em;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+        .hall-card button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .hall-card button:hover {
+            background-color: #8D774D;
+        }
+
+        /* ------------------ لوحة الإدارة ------------------ */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .metric-box {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .metric-box h3 {
+            margin: 0 0 5px 0;
+            font-size: 1em;
+            opacity: 0.8;
+        }
+        .metric-box p {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: right;
+        }
+        th {
+            background-color: #eee;
+            color: var(--secondary-color);
+        }
+        .status-available { color: var(--success-color); font-weight: bold; }
+        .status-booked { color: var(--danger-color); font-weight: bold; }
+        .status-pending { color: #FFA500; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>💎 زفاف (Zefaf) - تطبيق حجز القاعات</h1>
+        <nav id="nav-bar">
+            </nav>
+    </header>
+
+    <div class="container">
+        <div id="client-view" class="section active">
+            <h2>🎉 احجز قاعة أحلامك</h2>
+            <div style="margin-bottom: 20px;">
+                <label for="date-selector">اختر تاريخ الحجز:</label>
+                <input type="date" id="date-selector" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            </div>
+            <div id="halls-list" class="hall-card-container">
+                </div>
+        </div>
+
+        <div id="owner-view" class="section">
+            <h2>🗓 لوحة تحكم القاعة - قاعة الجوهرة</h2>
+            <p>*ملاحظة:* يتم عرض بيانات قاعة وهمية واحدة.</p>
+            
+            <h3>إدارة التوفر والأسعار</h3>
+            <div style="background: #FFFBE6; border-left: 5px solid #FFC107; padding: 10px; margin-bottom: 20px;">
+                الحالة الحالية: <span id="owner-status" class="status-available">متوفرة</span> | السعر: <span id="owner-price">10,000 $</span>
+            </div>
+
+            <label for="new-status">تغيير حالة التوفر ليوم معين:</label>
+            <select id="new-status" style="padding: 10px;">
+                <option value="available">متوفر</option>
+                <option value="booked">محجوز</option>
+            </select>
+            <button onclick="updateHallStatus()" style="padding: 10px; background-color: var(--primary-color); color: white; border: none; cursor: pointer; margin-right: 10px;">تحديث الحالة</button>
+            <hr>
+
+            <h3>قائمة الحجوزات الخاصة بي</h3>
+            <div class="table-responsive">
+                <table id="owner-bookings-table">
+                    <thead>
+                        <tr><th>تاريخ الحجز</th><th>العميل</th><th>حالة الدفع</th></tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="admin-view" class="section">
+            <h2>💰 لوحة تحكم المدير (الإيرادات والعملاء)</h2>
+
+            <h3>ملخص الإيرادات</h3>
+            <div class="dashboard-grid">
+                <div class="metric-box">
+                    <h3>الإيرادات الإجمالية للتطبيق</h3>
+                    <p id="total-revenue">0 $</p>
+                </div>
+                <div class="metric-box">
+                    <h3>عمولة التطبيق (20%)</h3>
+                    <p id="app-commission">0 $</p>
+                </div>
+                <div class="metric-box">
+                    <h3>القاعات المشتركة</h3>
+                    <p id="total-halls">0</p>
+                </div>
+                <div class="metric-box">
+                    <h3>الزبائن الكلي</h3>
+                    <p id="total-customers">0</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 30px;">تفاصيل الحجوزات والعملاء</h3>
+            <div class="table-responsive">
+                <table id="admin-data-table">
+                    <thead>
+                        <tr>
+                            <th>القاعة</th>
+                            <th>تاريخ الحجز</th>
+                            <th>العميل</th>
+                            <th>الإجمالي</th>
+                            <th>حالة الحجز</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ----------------------------------------------------
+        // 1. البيانات الوهمية (Dummy Data) لتمثيل قاعدة البيانات
+        // ----------------------------------------------------
+
+        let hallsData = [
+            { id: 1, name: "قاعة الجوهرة الملكية", price: 10000, capacity: 500, size: "1500 م²", shape: "دائري", status: "available" },
+            { id: 2, name: "فندق الباشا للأفراح", price: 15000, capacity: 700, size: "2000 م²", shape: "مستطيل", status: "available" },
+            { id: 3, name: "قاعة ليالينا الفاخرة", price: 8500, capacity: 350, size: "1000 م²", shape: "مسرحي", status: "booked" }
+        ];
+
+        let bookingsData = [
+            { id: 101, hallId: 3, hallName: "قاعة ليالينا الفاخرة", date: "2025-12-31", customerName: "أحمد علي", total: 8500, status: "مؤكدة" },
+            { id: 102, hallId: 1, hallName: "قاعة الجوهرة الملكية", date: "2026-01-15", customerName: "ليث محمد", total: 10000, status: "قيد المراجعة" },
+        ];
+        
+        const COMMISSION_RATE = 0.20; // نسبة عمولة التطبيق 20%
+
+        // ----------------------------------------------------
+        // 2. إدارة التنقل وعرض الواجهات
+        // ----------------------------------------------------
+
+        const views = {
+            'client': { id: 'client-view', name: 'العميل (حجز)' },
+            'owner': { id: 'owner-view', name: 'صاحب القاعة (إدارة)' },
+            'admin': { id: 'admin-view', name: 'المدير (إيرادات)' }
+        };
+
+        function showView(viewName) {
+            // إخفاء جميع الأقسام
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // إظهار القسم المطلوب
+            document.getElementById(views[viewName].id).classList.add('active');
+
+            // تحديث زر التنقل النشط
+            document.querySelectorAll('#nav-bar button').forEach(button => {
+                button.classList.remove('active');
+                if (button.getAttribute('data-view') === viewName) {
+                    button.classList.add('active');
+                }
+            });
+
+            // إعادة تحميل البيانات عند تغيير الواجهة
+            if (viewName === 'client') renderHalls();
+            if (viewName === 'admin') renderAdminDashboard();
+            if (viewName === 'owner') renderOwnerDashboard();
+        }
+
+        // إنشاء أزرار التنقل ديناميكياً
+        function createNavBar() {
+            const navBar = document.getElementById('nav-bar');
+            navBar.innerHTML = '';
+            Object.keys(views).forEach(key => {
+                const button = document.createElement('button');
+                button.textContent = views[key].name;
+                button.setAttribute('data-view', key);
+                button.onclick = () => showView(key);
+                navBar.appendChild(button);
+            });
+            // عرض الواجهة الافتراضية عند التحميل
+            showView('client');
+        }
+
+        // ----------------------------------------------------
+        // 3. وظائف واجهة العميل (Client)
+        // ----------------------------------------------------
+
+        function renderHalls() {
+            const list = document.getElementById('halls-list');
+            list.innerHTML = ''; // تفريغ القائمة قبل العرض
+
+            hallsData.forEach(hall => {
+                const isBooked = hall.status === 'booked';
+                
+                const card = document.createElement('div');
+                card.className = 'hall-card';
+                card.innerHTML = `
+                    <div class="hall-card-img">صورة القاعة ${hall.id}</div>
+                    <div class="hall-card-info">
+                        <h3>${hall.name}</h3>
+                        <p>السعة: ${hall.capacity} شخص | الحجم: ${hall.size}</p>
+                        <p>الشكل: ${hall.shape}</p>
+                        <p class="price">السعر: ${hall.price.toLocaleString()} $</p>
+                        <p class="${isBooked ? 'status-booked' : 'status-available'}">
+                            الحالة: ${isBooked ? 'محجوزة (غير متوفرة في التاريخ المحدد)' : 'متوفرة'}
+                        </p>
+                    </div>
+                    <button onclick="simulateBooking(${hall.id})" ${isBooked ? 'disabled' : ''}>
+                        ${isBooked ? 'غير متوفرة' : 'احجز الآن'}
+                    </button>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function simulateBooking(hallId) {
+            const hall = hallsData.find(h => h.id === hallId);
+            if (!hall || hall.status === 'booked') {
+                alert('عذراً، القاعة محجوزة.');
+                return;
+            }
+
+            // محاكاة عملية الحجز
+            const newBooking = {
+                id: bookingsData.length + 101,
+                hallId: hall.id,
+                hallName: hall.name,
+                date: document.getElementById('date-selector').value || new Date().toISOString().slice(0, 10),
+                customerName: prompt("يرجى إدخال اسمك لحجز القاعة:"),
+                total: hall.price + 1500, // إضافة وهمية 1500$ للإضافات
+                status: "مؤكدة"
+            };
+
+            if (newBooking.customerName) {
+                bookingsData.push(newBooking);
+                hall.status = 'booked'; // نغير حالة القاعة لتصبح محجوزة في هذا المثال البسيط
+                alert(تم حجز قاعة ${hall.name} بنجاح! الإجمالي: ${newBooking.total} $);
+                renderHalls(); // إعادة عرض القاعات
+            } else {
+                alert('تم إلغاء الحجز.');
+            }
+        }
+
+        // ----------------------------------------------------
+        // 4. وظائف واجهة المدير (Admin)
+        // ----------------------------------------------------
+
+        function renderAdminDashboard() {
+            let totalRevenue = bookingsData.reduce((sum, booking) => sum + booking.total, 0);
+            let appCommission = totalRevenue * COMMISSION_RATE;
+            
+            document.getElementById('total-revenue').textContent = ${totalRevenue.toLocaleString()} $;
+            document.getElementById('app-commission').textContent = ${appCommission.toLocaleString()} $;
+            document.getElementById('total-halls').textContent = hallsData.length;
+            
+            // حساب العملاء الفريدين
+            const customers = new Set(bookingsData.map(b => b.customerName));
+            document.getElementById('total-customers').textContent = customers.size;
+
+            // عرض تفاصيل الحجوزات
+            const tableBody = document.querySelector('#admin-data-table tbody');
+            tableBody.innerHTML = '';
+            
+            bookingsData.forEach(booking => {
+                const row = tableBody.insertRow();
+                const statusClass = booking.status === 'مؤكدة' ? 'status-booked' : 'status-pending';
+                row.innerHTML = `
+                    <td>${booking.hallName}</td>
+                    <td>${booking.date}</td>
+                    <td>${booking.customerName}</td>
+                    <td>${booking.total.toLocaleString()} $</td>
+                    <td class="${statusClass}">${booking.status}</td>
+                `;
+            });
+        }
+
+        // ----------------------------------------------------
+        // 5. وظائف واجهة صاحب القاعة (Owner)
+        // ----------------------------------------------------
+        
+        function renderOwnerDashboard() {
+            // نفترض أن صاحب القاعة هو صاحب القاعة رقم 1 (الجوهرة)
+            const ownerHall = hallsData.find(h => h.id === 1); 
+            if (!ownerHall) return;
+
+            document.getElementById('owner-status').textContent = ownerHall.status === 'available' ? 'متوفرة' : 'محجوزة';
+            document.getElementById('owner-price').textContent = ${ownerHall.price.toLocaleString()} $;
+
+            // عرض حجوزات هذه القاعة
+            const ownerBookings = bookingsData.filter(b => b.hallId === ownerHall.id);
+            const tableBody = document.querySelector('#owner-bookings-table tbody');
+            tableBody.innerHTML = '';
+
+            ownerBookings.forEach(booking => {
+                const row = tableBody.insertRow();
+                const statusClass = booking.status === 'مؤكدة' ? 'status-available' : 'status-pending';
+                row.innerHTML = `
+                    <td>${booking.date}</td>
+                    <td>${booking.customerName}</td>
+                    <td class="${statusClass}">${booking.status}</td>
+                `;
+            });
+        }
+
+        function updateHallStatus() {
+            const ownerHall = hallsData.find(h => h.id === 1);
+            if (!ownerHall) return;
+
+            const newStatus = document.getElementById('new-status').value;
+            ownerHall.status = newStatus;
+
+            alert(تم تحديث حالة قاعة الجوهرة إلى: ${newStatus === 'available' ? 'متوفر' : 'محجوز'});
+            renderOwnerDashboard(); // تحديث لوحة التحكم
+        }
+
+
+        // ----------------------------------------------------
+        // 6. تشغيل التطبيق عند التحميل
+        // ----------------------------------------------------
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createNavBar(); // إنشاء أزرار التنقل
+            // showView('client') يتم استدعاؤها داخل createNavBar
+        });
+
+    </script>
+
+</body>
+</html>
