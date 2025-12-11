@@ -1,74 +1,43 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عراق الأفراح - JoyIQ</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!-- شاشة تسجيل الدخول -->
-    <div class="login-container" id="loginScreen">
-        <div class="login-box">
-            <h1 class="login-title">عراق الأفراح - JoyIQ</h1>
-            <p class="login-subtitle">النظام المتكامل لحجز قاعات الأفراح</p>
+<script>
+// حاول هذا الكود البديل
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('التطبيق محمل!');
+    
+    const loginBtn = document.getElementById('loginBtn');
+    if (loginBtn) {
+        loginBtn.addEventListener('click', function() {
+            const username = document.getElementById('username').value;
+            const userTypes = document.querySelectorAll('.user-type');
+            const activeType = document.querySelector('.user-type.active').dataset.type;
             
-            <div class="user-type-selector">
-                <button class="user-type active" data-type="admin">مدير النظام</button>
-                <button class="user-type" data-type="owner">صاحب قاعة</button>
-                <button class="user-type" data-type="customer">عميل</button>
-            </div>
+            if (!username) {
+                alert('يرجى إدخال اسم المستخدم');
+                return;
+            }
             
-            <div class="form-group">
-                <label for="username">اسم المستخدم</label>
-                <input type="text" id="username" class="form-control" placeholder="أدخل اسم المستخدم">
-            </div>
+            // إخفاء شاشة الدخول
+            document.getElementById('loginScreen').style.display = 'none';
             
-            <div class="form-group">
-                <label for="password">كلمة المرور</label>
-                <input type="password" id="password" class="form-control" placeholder="أدخل كلمة المرور">
-            </div>
-            
-            <button class="btn" id="loginBtn">
-                <i class="fas fa-sign-in-alt"></i>
-                تسجيل الدخول
-            </button>
-            
-            <div class="aws-info">
-                <p><i class="fas fa-cloud"></i> متصل بـ AWS</p>
-                <small>نسخة Deployment كاملة</small>
-            </div>
-        </div>
-    </div>
-
-    <!-- سيتم تحميل الواجهات ديناميكياً -->
-    <div id="appContainer"></div>
-
-    <!-- نافذة إضافة قاعة -->
-    <div class="modal" id="addHallModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>إضافة قاعة جديدة</h3>
-                <button class="close-modal" id="closeHallModal">&times;</button>
-            </div>
-            <form id="hallForm">
-                <div class="form-group">
-                    <label>اسم القاعة</label>
-                    <input type="text" class="form-control" id="hallName" required>
+            // عرض رسالة نجاح
+            document.body.innerHTML = `
+                <div style="text-align:center; padding:50px;">
+                    <h1 style="color:#8B4513;">✅ تم الدخول بنجاح!</h1>
+                    <p>مرحباً ${username}</p>
+                    <p>نوع الحساب: ${activeType}</p>
+                    <button onclick="location.reload()" style="background:#8B4513; color:white; padding:10px 20px; border:none; border-radius:5px;">
+                        العودة لتسجيل الدخول
+                    </button>
                 </div>
-                <div class="form-group">
-                    <label>السعر (دينار عراقي)</label>
-                    <input type="number" class="form-control" id="hallPrice" required>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-danger" id="cancelHallBtn">إلغاء</button>
-                    <button type="submit" class="btn btn-success">حفظ القاعة</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+            `;
+        });
+    }
+    
+    // تفعيل أزرار نوع المستخدم
+    document.querySelectorAll('.user-type').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.user-type').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+});
+</script>
