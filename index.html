@@ -348,8 +348,42 @@
         </div>
     </div>
 
-    <script>
+   
         // تحكم عرض الواجهات
+      <script>
+        // ============= إعدادات الاتصال بخادم AWS =============
+        const API_URL = 'https://mto6epr6y6.execute-api.us-east-1.amazonaws.com/zifaf/login';
+        
+        // دالة لعرض رسائل للمستخدم
+        function showMessage(message, isSuccess = true) {
+            alert(isSuccess ? '✅ ' + message : '❌ ' + message);
+        }
+
+        // دالة تسجيل الدخول الحقيقية (تتصل بخادم AWS)
+        async function realLogin(username, password, userType) {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password, userType })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // فك تشفير النص العربي
+                    const arabicMessage = result.message.replace(/\\u[\dA-F]{4}/gi, 
+                        match => String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16)));
+                    return { success: true, message: arabicMessage, data: result };
+                } else {
+                    return { success: false, message: result.message || 'فشل تسجيل الدخول' };
+                }
+            } catch (error) {
+                return { success: false, message: 'تعذر الاتصال بالخادم' };
+            }
+        }
+
+        // ============= الكود الأصلي مع تعديل بسيط =============
         document.addEventListener('DOMContentLoaded', function () {
             const loginScreen = document.getElementById('loginScreen');
             const adminDashboard = document.getElementById('adminDashboard');
@@ -357,8 +391,10 @@
             const customerDashboard = document.getElementById('customerDashboard');
             const userTypes = document.querySelectorAll('.user-type');
             const loginBtn = document.getElementById('loginBtn');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
 
-            // افتراض نوع المستخدم admin (لو تختارين غيره يتغير)
+            // افتراض نوع المستخدم admin
             let selectedType = 'admin';
             userTypes.forEach(t => {
                 t.addEventListener('click', function () {
@@ -368,19 +404,38 @@
                 });
             });
 
-            loginBtn.addEventListener('click', function () {
-                // هنا ممكن تضيفين تحقق بسيط (ما ضروري الآن)
-                loginScreen.style.display = 'none';
-                adminDashboard.style.display = 'none';
-                ownerDashboard.style.display = 'none';
-                customerDashboard.style.display = 'none';
+            // ============= التعديل الرئيسي هنا =============
+            loginBtn.addEventListener('click', async function () {
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
 
-                if (selectedType === 'admin') adminDashboard.style.display = 'flex';
-                else if (selectedType === 'owner') ownerDashboard.style.display = 'flex';
-                else customerDashboard.style.display = 'block';
+                if (!username || !password) {
+                    showMessage('يرجى إدخال اسم المستخدم وكلمة المرور', false);
+                    return;
+                }
+
+                // الاتصال بخادم AWS الحقيقي
+                showMessage('جاري تسجيل الدخول...', true);
+                const loginResult = await realLogin(username, password, selectedType);
+
+                if (loginResult.success) {
+                    // نجاح - عرض الواجهة المناسبة
+                    loginScreen.style.display = 'none';
+                    adminDashboard.style.display = 'none';
+                    ownerDashboard.style.display = 'none';
+                    customerDashboard.style.display = 'none';
+
+                    if (selectedType === 'admin') adminDashboard.style.display = 'flex';
+                    else if (selectedType === 'owner') ownerDashboard.style.display = 'flex';
+                    else customerDashboard.style.display = 'block';
+                    
+                    showMessage(loginResult.message || 'تم تسجيل الدخول بنجاح!', true);
+                } else {
+                    showMessage(loginResult.message, false);
+                }
             });
 
-            // أزرار تسجيل الخروج
+            // أزرار تسجيل الخروج (كما هي)
             const logoutBtnAdmin = document.getElementById('logoutBtnAdmin');
             const logoutBtnOwner = document.getElementById('logoutBtnOwner');
 
@@ -391,13 +446,17 @@
                     ownerDashboard.style.display = 'none';
                     customerDashboard.style.display = 'none';
                     loginScreen.style.display = 'flex';
-                    // إعادة الوضع الافتراضي
+                    // إعادة تعيين الحقول
+                    usernameInput.value = '';
+                    passwordInput.value = '';
                     userTypes.forEach(x => x.classList.remove('active'));
                     userTypes[0].classList.add('active');
+                    selectedType = 'admin';
+                    showMessage('تم تسجيل الخروج بنجاح', true);
                 });
             });
 
-            // تفعيل اختيار الخدمات (ظاهري)
+            // تفعيل اختيار الخدمات (ظاهري - كما هو)
             document.querySelectorAll('.service-card').forEach(card => {
                 card.addEventListener('click', () => card.classList.toggle('selected'));
             });
@@ -405,3 +464,5 @@
     </script>
 </body>
 </html>
+
+
