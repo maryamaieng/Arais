@@ -349,58 +349,165 @@
     </div>
 
     <script>
-        // تحكم عرض الواجهات
-        document.addEventListener('DOMContentLoaded', function () {
-            const loginScreen = document.getElementById('loginScreen');
-            const adminDashboard = document.getElementById('adminDashboard');
-            const ownerDashboard = document.getElementById('ownerDashboard');
-            const customerDashboard = document.getElementById('customerDashboard');
-            const userTypes = document.querySelectorAll('.user-type');
-            const loginBtn = document.getElementById('loginBtn');
+        // ===================== إعدادات API =====================
+        const API_BASE_URL = 'https://mto6epr6y6.execute-api.us-east-1.amazonaws.com/zifaf';
+        const API_ENDPOINTS = {
+            login: ${API_BASE_URL}/login
+        };
 
-            // افتراض نوع المستخدم admin (لو تختارين غيره يتغير)
-            let selectedType = 'admin';
-            userTypes.forEach(t => {
-                t.addEventListener('click', function () {
-                    userTypes.forEach(x => x.classList.remove('active'));
-                    this.classList.add('active');
-                    selectedType = this.dataset.type;
+        // ===================== حالة التطبيق =====================
+        let currentUser = null;
+
+        // ===================== عناصر DOM =====================
+        const loginScreen = document.getElementById('loginScreen');
+        const adminDashboard = document.getElementById('adminDashboard');
+        const ownerDashboard = document.getElementById('ownerDashboard');
+        const customerDashboard = document.getElementById('customerDashboard');
+        const userTypes = document.querySelectorAll('.user-type');
+        const loginBtn = document.getElementById('loginBtn');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const logoutBtnAdmin = document.getElementById('logoutBtnAdmin');
+        const logoutBtnOwner = document.getElementById('logoutBtnOwner');
+
+        // ===================== دوال مساعدة =====================
+        function showMessage(message, type = 'info') {
+            alert([${type}] ${message});
+        }
+
+        function decodeArabicText(text) {
+            try {
+                return JSON.parse('{"text": "' + text + '"}').text;
+            } catch (e) {
+                return text;
+            }
+        }
+
+        // ===================== دوال API الرئيسية =====================
+        async function loginUser(username, password, userType) {
+            const loginData = {
+                username: username,
+                password: password,
+                userType: userType
+            };
+
+            try {
+                showMessage('جاري تسجيل الدخول...', 'info');
+                
+                const response = await fetch(API_ENDPOINTS.login, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(loginData)
                 });
-            });
 
-            loginBtn.addEventListener('click', function () {
-                // هنا ممكن تضيفين تحقق بسيط (ما ضروري الآن)
+                const result = await response.json();
+                
+                if (response.ok) {
+                    if (result.message) {
+                        result.message = decodeArabicText(result.message);
+                    }
+                    
+                    return {
+                        success: true,
+                        data: result
+                    };
+                } else {
+                    return {
+                        success: false,
+                        error: result.message || 'فشل تسجيل الدخول'
+                    };
+                }
+            } catch (error) {
+                console.error('خطأ في الاتصال:', error);
+                return {
+                    success: false,
+                    error: 'تعذر الاتصال بالخادم'
+                };
+            }
+        }
+
+        // ===================== معالجة واجهة المستخدم =====================
+        let selectedType = 'admin';
+        
+        // اختيار نوع المستخدم
+        userTypes.forEach(t => {
+            t.addEventListener('click', function () {
+                userTypes.forEach(x => x.classList.remove('active'));
+                this.classList.add('active');
+                selectedType = this.dataset.type;
+            });
+        });
+
+        // زر تسجيل الدخول
+        loginBtn.addEventListener('click', async function () {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (!username || !password) {
+                showMessage('يرجى إدخال اسم المستخدم وكلمة المرور', 'warning');
+                return;
+            }
+
+            const loginResult = await loginUser(username, password, selectedType);
+            
+            if (loginResult.success) {
+                currentUser = {
+                    username: username,
+                    userType: selectedType,
+                    ...loginResult.data
+                };
+                
                 loginScreen.style.display = 'none';
                 adminDashboard.style.display = 'none';
                 ownerDashboard.style.display = 'none';
                 customerDashboard.style.display = 'none';
 
-                if (selectedType === 'admin') adminDashboard.style.display = 'flex';
-                else if (selectedType === 'owner') ownerDashboard.style.display = 'flex';
-                else customerDashboard.style.display = 'block';
-            });
+                if (selectedType === 'admin') {
+                    adminDashboard.style.display = 'flex';
+                } else if (selectedType === 'owner') {
+                    ownerDashboard.style.display = 'flex';
+                } else {
+                    customerDashboard.style.display = 'block';
+                }
+                
+                showMessage(loginResult.data.message || 'تم تسجيل الدخول بنجاح!', 'success');
+            } else {
+                showMessage(loginResult.error, 'error');
+            }
+        });
 
-            // أزرار تسجيل الخروج
-            const logoutBtnAdmin = document.getElementById('logoutBtnAdmin');
-            const logoutBtnOwner = document.getElementById('logoutBtnOwner');
+        // أزرار تسجيل الخروج
+        function logout() {
+            currentUser = null;
+            adminDashboard.style.display = 'none';
+            ownerDashboard.style.display = 'none';
+            customerDashboard.style.display = 'none';
+            loginScreen.style.display = 'flex';
+            
+            usernameInput.value = '';
+            passwordInput.value = '';
+            userTypes.forEach(x => x.classList.remove('active'));
+            userTypes[0].classList.add('active');
+            selectedType = 'admin';
+            
+            showMessage('تم تسجيل الخروج بنجاح', 'info');
+        }
 
-            [logoutBtnAdmin, logoutBtnOwner].forEach(btn => {
-                if (btn) btn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    adminDashboard.style.display = 'none';
-                    ownerDashboard.style.display = 'none';
-                    customerDashboard.style.display = 'none';
-                    loginScreen.style.display = 'flex';
-                    // إعادة الوضع الافتراضي
-                    userTypes.forEach(x => x.classList.remove('active'));
-                    userTypes[0].classList.add('active');
-                });
-            });
+        if (logoutBtnAdmin) logoutBtnAdmin.addEventListener('click', function (e) {
+            e.preventDefault();
+            logout();
+        });
 
-            // تفعيل اختيار الخدمات (ظاهري)
-            document.querySelectorAll('.service-card').forEach(card => {
-                card.addEventListener('click', () => card.classList.toggle('selected'));
-            });
+        if (logoutBtnOwner) logoutBtnOwner.addEventListener('click', function (e) {
+            e.preventDefault();
+            logout();
+        });
+
+        // تفعيل اختيار الخدمات
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('click', () => card.classList.toggle('selected'));
         });
     </script>
 </body>
