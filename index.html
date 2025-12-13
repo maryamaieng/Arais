@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>زفاف - النظام المتكامل</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>زفاف - النظام المتكامل (UI)</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 <style>
-:root {
-  --primary: #8B4513; --secondary: #D4AF37; --light: #F9F3E9; --dark: #2C1810;
-  --success: #2E8B57; --warning: #FFA500; --danger: #DC143C; --shadow: 0 4px 12px rgba(0,0,0,0.12); --radius: 12px;
-}
+:root{--primary:#8B4513;--primary-light:#A0522D;--secondary:#D4AF37;--secondary-light:#E5C158;--accent:#8B0000;--light:#F9F3E9;--dark:#2C1810;--gray:#7A6A5C;--success:#2E8B57;--warning:#FFA500;--danger:#DC143C;--shadow:0 4px 12px rgba(0,0,0,0.12);--radius:12px;}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Arial;}
 body{background:#f5f5f5;color:var(--dark);line-height:1.6}
 /* Login */
 .login-container{display:flex;justify-content:center;align-items:center;min-height:100vh;background:linear-gradient(135deg,var(--primary),var(--dark));padding:20px}
 .login-box{background:white;padding:32px;border-radius:var(--radius);box-shadow:var(--shadow);width:100%;max-width:420px;text-align:center}
 .login-title{color:var(--primary);font-size:1.8rem;margin-bottom:6px}
-.login-subtitle{color:var(--dark);margin-bottom:18px}
+.login-subtitle{color:var(--gray);margin-bottom:18px}
 .user-type-selector{display:flex;margin-bottom:16px;border-radius:10px;overflow:hidden;border:2px solid var(--primary)}
 .user-type{flex:1;padding:10px;background:white;border:none;cursor:pointer;font-weight:600;transition:all .2s}
 .user-type.active{background:var(--primary);color:#fff}
@@ -26,28 +23,12 @@ label{display:block;margin-bottom:6px;font-weight:600;color:var(--dark)}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;background:var(--primary);color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:700;width:100%}
 .btn-secondary{background:var(--secondary);color:#111}
 .btn:hover{transform:translateY(-2px)}
-/* Dashboards */
-.dashboard{display:none;min-height:100vh;padding:20px}
-h2,h3,h4{margin-bottom:6px}
-.card{background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
-.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.card-value{font-size:1.5rem;font-weight:700}
-.section{background:#fff;border-radius:12px;padding:18px;box-shadow:var(--shadow);margin-bottom:18px}
-.halls-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
-.hall-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
-.hall-image{height:150px;background-size:cover;background-position:center}
-.hall-content{padding:12px}
-.feature{background:var(--light);padding:4px 8px;border-radius:12px;font-size:.8rem;color:var(--dark);margin-right:6px;display:inline-block;}
-.owner-small-cards{display:flex;gap:12px;flex-wrap:wrap}
-.owner-small-cards .card{flex:1;min-width:180px}
-table{width:100%;border-collapse:collapse;margin-top:10px}
-th,td{padding:8px;text-align:right;border-bottom:1px solid #eee}
-.success{color:var(--success)}
-.warning{color:var(--warning)}
+.dashboard{display:none;min-height:100vh}
 </style>
 </head>
 <body>
-<!-- Login -->
+
+<!-- شاشة تسجيل الدخول -->
 <div class="login-container" id="loginScreen">
   <div class="login-box">
     <h1 class="login-title">زفاف</h1>
@@ -58,86 +39,99 @@ th,td{padding:8px;text-align:right;border-bottom:1px solid #eee}
       <button class="user-type" data-type="customer">عميل</button>
     </div>
     <div class="form-group">
-      <label>اسم المستخدم</label>
+      <label for="username">اسم المستخدم</label>
       <input type="text" id="username" class="form-control" placeholder="أدخل اسم المستخدم">
     </div>
     <div class="form-group">
-      <label>كلمة المرور</label>
+      <label for="password">كلمة المرور</label>
       <input type="password" id="password" class="form-control" placeholder="أدخل كلمة المرور">
     </div>
     <button class="btn" id="loginBtn">تسجيل الدخول</button>
   </div>
 </div>
 
-<!-- Dashboards -->
-<div class="dashboard" id="adminDashboard">
-  <h2>لوحة المدير</h2>
-  <div class="card">
-    <div class="card-header"><h3>إجمالي القاعات</h3></div>
-    <div class="card-value">42</div>
-  </div>
-</div>
-
-<div class="dashboard" id="ownerDashboard">
-  <h2>لوحة صاحب القاعة</h2>
-  <div class="owner-small-cards">
-    <div class="card"><div class="card-header"><h3>حجوزات مؤكدة</h3></div><div class="card-value">12</div></div>
-    <div class="card"><div class="card-header"><h3>أرباح الشهر</h3></div><div class="card-value">16,000,000 د.ع</div></div>
-  </div>
-</div>
-
-<div class="dashboard" id="customerDashboard">
-  <h2>واجهة العميل</h2>
-  <div class="halls-grid">
-    <div class="hall-card"><div class="hall-image" style="background-image:url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1350&q=80')"></div><div class="hall-content"><h3>قاعة بغداد الدولية</h3><div class="feature">سعة 500</div><button class="btn">احجز الآن</button></div></div>
-  </div>
-</div>
+<!-- واجهات المدير - صاحب القاعة - العميل -->
+<div class="dashboard" id="adminDashboard"></div>
+<div class="dashboard" id="ownerDashboard"></div>
+<div class="dashboard" id="customerDashboard"></div>
 
 <script>
-// === إعدادات API Gateway ===
-const API_URL = 'https://jbph80gaih.execute-api.us-east-1.amazonaws.com/dev'; // غيري للـ Invoke URL الخاص بيك
+document.addEventListener('DOMContentLoaded', function () {
+  const API_URL = "https://jbph80gaih.execute-api.us-east-1.amazonaws.com/dev"; // Invoke URL
 
-// === التعامل مع الواجهات ===
-document.addEventListener('DOMContentLoaded', () => {
   const loginScreen = document.getElementById('loginScreen');
   const adminDashboard = document.getElementById('adminDashboard');
   const ownerDashboard = document.getElementById('ownerDashboard');
   const customerDashboard = document.getElementById('customerDashboard');
   const userTypes = document.querySelectorAll('.user-type');
   const loginBtn = document.getElementById('loginBtn');
-  const usernameInput = document.getElementById('username');
-  const passwordInput = document.getElementById('password');
 
   let selectedType = 'admin';
-  userTypes.forEach(t => t.addEventListener('click', function() {
-    userTypes.forEach(x=>x.classList.remove('active'));
-    this.classList.add('active');
-    selectedType = this.dataset.type;
-  }));
+  userTypes.forEach(t => {
+    t.addEventListener('click', function () {
+      userTypes.forEach(x => x.classList.remove('active'));
+      this.classList.add('active');
+      selectedType = this.dataset.type;
+    });
+  });
 
-  loginBtn.addEventListener('click', async () => {
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value.trim();
-    if(!username || !password){ alert('يرجى إدخال اسم المستخدم وكلمة المرور'); return; }
-
+  loginBtn.addEventListener('click', async function () {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
     try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
+      const res = await fetch(${API_URL}/login, {
+        method:'POST',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({username,password,userType:selectedType})
+        body:JSON.stringify({username,password,userType:selectedType})
       });
       const data = await res.json();
-      if(res.ok){
+      if(data.success){
         loginScreen.style.display='none';
-        adminDashboard.style.display='none';
-        ownerDashboard.style.display='none';
-        customerDashboard.style.display='none';
-        if(selectedType==='admin') adminDashboard.style.display='block';
-        else if(selectedType==='owner') ownerDashboard.style.display='block';
-        else customerDashboard.style.display='block';
-      } else { alert(data.message||'فشل تسجيل الدخول'); }
-    } catch(e){ alert('تعذر الاتصال بالخادم'); }
+        adminDashboard.style.display=selectedType==='admin'?'flex':'none';
+        ownerDashboard.style.display=selectedType==='owner'?'flex':'none';
+        customerDashboard.style.display=selectedType==='customer'?'block':'none';
+        // تحميل بيانات القاعات والحجوزات من Lambda
+        if(selectedType==='customer') loadHalls();
+      } else {
+        alert(data.message||"خطأ في تسجيل الدخول");
+      }
+    } catch(err){
+      console.error(err);
+      alert("خطأ في الاتصال بالخادم");
+    }
   });
+
+  async function loadHalls(){
+    try{
+      const res = await fetch(${API_URL}/halls);
+      const halls = await res.json();
+      customerDashboard.innerHTML = <h2>القاعات المتاحة</h2> +
+        halls.map(h=>`<div style="margin-bottom:16px; border:1px solid #ddd;padding:10px;border-radius:8px">
+        <h3>${h.name}</h3>
+        <p>${h.desc}</p>
+        <strong>${h.price} د.ع</strong>
+        <button class="btn" onclick="bookHall('${h.id}')">احجز الآن</button>
+        </div>`).join('');
+    } catch(err){ console.error(err); }
+  }
+
+  window.bookHall = async function(hallId){
+    const name = prompt("اسم الزبون:");
+    const date = prompt("تاريخ المناسبة YYYY-MM-DD:");
+    const guests = prompt("عدد المدعوين:");
+    if(!name || !date || !guests) return alert("مطلوب جميع البيانات");
+    try{
+      const res = await fetch(${API_URL}/book, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({hallId,name,date,guests})
+      });
+      const data = await res.json();
+      if(data.success) alert("تم الحجز بنجاح!");
+      else alert(data.message||"فشل الحجز");
+    } catch(err){console.error(err);}
+  };
+
 });
 </script>
 </body>
